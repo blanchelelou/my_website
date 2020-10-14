@@ -37,8 +37,8 @@ disqusShortname = ""
 
   # Navigation Section
   [params.navigation]
-    title = "Forty"
-    subtitle = "By HTML5 Up"
+    title = "Portfolio"
+    subtitle = "By Blanche Lelouvier"
     menu = "Menu"
     # Optional logo as brand stored in img/
     # logo = "logo.png"
@@ -68,7 +68,7 @@ disqusShortname = ""
 
     # Button Style 1
     [[params.navigation.button1]]
-      name = "Get Started"
+      name = "My projects"
       url = "blogs"
 
     # Button Style 2
@@ -83,7 +83,7 @@ disqusShortname = ""
     # the 'static/img' folder.
     title = "Hi, my name is Blanche"
     subtitle = "This is my portfolio website"
-    buttonText = "Get Started"
+    buttonText = "My projects"
 
 
   # Tiles Section
@@ -92,40 +92,40 @@ disqusShortname = ""
     # Display your showcases here.
     
     [[params.tiles.showcase]]
-      title = "Aliquam"
-      subtitle = "Ipsum Dolor Sit Amet"
-      image = "pic01.jpg"
+      title = "Netflix & Chill"
+      subtitle = "Does Steven Spielberg really beat Tim Burton in IMDB ratings?"
+      image = "movie.jpg"
       url = "blogs/aliquam"
 
     [[params.tiles.showcase]]
-      title = "Tempus"
-      subtitle = "Feugiat Amet Tempus"
-      image = "pic02.jpg"
+      title = "The social media trap"
+      subtitle = "Who uses social media?"
+      image = "media.jpg"
       url = "blogs/tempus"
 
     [[params.tiles.showcase]]
-      title = "Magna"
-      subtitle = "Lorem Etiam Nullam"
-      image = "pic03.jpg"
+      title = "Your people matter"
+      subtitle = "How satisfied are your employees?"
+      image = "employee.jpg"
       url = "blogs/magna"
 
     [[params.tiles.showcase]]
-      title = "Ipsum"
-      subtitle = "Nisl Sed Aliquam"
-      image = "pic04.jpg"
+      title = "Financial Stocks"
+      subtitle = "Which stocks will make you rich?"
+      image = "finance.jpg"
       url = "blogs/ipsum"
 
-    [[params.tiles.showcase]]
-      title = "Consequat"
-      subtitle = "Ipsum Dolor Sit Amet"
-      image = "pic05.jpg"
-      url = "blogs/ipsum"
+    ##[[params.tiles.showcase]]
+      ##title = "Consequat"
+     ## subtitle = "Ipsum Dolor Sit Amet"
+     ## image = "pic05.jpg"
+      ## url = "blogs/ipsum"
 
-    [[params.tiles.showcase]]
-      title = "Etiam"
-      subtitle = "Feugiat Amet Tempus"
-      image = "pic06.jpg"
-      url = "blogs/ipsum"
+    ##[[params.tiles.showcase]]
+      ## title = "Etiam"
+      ## subtitle = "Feugiat Amet Tempus"
+      ## image = "pic06.jpg"
+      ## url = "blogs/ipsum"
     # You can make more showcases by copy and pasting the code above
 
   [params.blog]
@@ -138,15 +138,13 @@ disqusShortname = ""
   # Section Type Two
   [params.two]
     enable = true
-    title = "Massa libero"
-    subtitle = """Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero. 
-    Mauris aliquet magna magna sed nunc rhoncus pharetra. 
-    Pellentesque condimentum sem. In efficitur ligula tate urna. Maecenas laoreet massa vel lacinia pellentesque lorem ipsum dolor. 
-    Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis libero.
-    Mauris aliquet magna magna sed nunc rhoncus amet pharetra et feugiat tempus."""
-    buttonText = "Get Started"
+    title = "About my world"
+    subtitle = """
+    Hello all! 
+    My name is Blanche and I am currently pursuing a Master's in Financial Analysis at the London Business School. This website is dedicated to share some of my work in data analytics.
+    Besides R, I am very passionate about finance, innovation and revolutionary technologies."""
+    buttonText = "My projects"
     url = "blogs"
-
 
   # Contact section
   [params.contact]
@@ -172,47 +170,47 @@ disqusShortname = ""
     # by copying the corresponding map with frontmatter code.
     [[params.contact.email]]
     title = "Email"
-    email = "example@domain.com"
+    email = "blelouvier.mfa2021@london.edu"
 
     [[params.contact.phone]]
     title = "Phone"
-    phone = "(000) 000-0000 x1234"
+    phone = "+44 (0)20 7000 7000"
 
     [[params.contact.address]]
-    title = "Address"
-    street = "Street"
-    city = "City, ST 00000"
-    country = "Country"
+    title = "London Business School"
+    street = "Regent's Park"
+    city = "London, NW1 4SA"
+    country = "United Kingdom"
 
   # Footer section
   [params.footer]
     enable = true
-    copyright = "Company Name"
+    copyright = "Blanche Lelouvier"
 
     # Uses font awesome icons
-    [[params.footer.social]]
-      icon = "fa-twitter"
-      url= "https://www.twitter.com"
-      label = "Twitter"
+    ##[[params.footer.social]]
+      ##icon = "fa-twitter"
+      ##url= "https://www.twitter.com"
+      ##label = "Twitter"
 
-    [[params.footer.social]]
-      icon = "fa-facebook"
-      url= "https://www.facebook.com"
-      label = "Facebook"
+    ##[[params.footer.social]]
+      ##icon = "fa-facebook"
+      ##url= "https://www.facebook.com"
+      ##label = "Facebook"
 
-    [[params.footer.social]]
-      icon = "fa-instagram"
-      url= "https://www.instagram.com"
-      label = "Instagram"
+    ##[[params.footer.social]]
+     ## icon = "fa-instagram"
+      ## url= "https://www.instagram.com"
+      ##label = "Instagram"
     
     [[params.footer.social]]
       icon = "fa-github"
-      url= "https://www.github.com"
+      url= "https://github.com/blanchelelou"
       label = "GitHub"
 
     [[params.footer.social]]
       icon = "fa-linkedin"
-      url= "https://www.linkedin.com"
+      url= "https://www.linkedin.com/in/blanche-lelouvier-13b27115a/de?originalSubdomain=uk&challengeId=AQFHtMFYu8r3HQAAAXT5X754tEUTBJdMeGMnZkHEluXf0ZzdtwZdv0jeecMu625ZxKhP4F61s3JzIxOB1t0AuqR3nXoPUVgAGQ&submissionId=c220d11d-2522-3b16-5f6a-640da6de2573"
       label = "LinkedIn"
 
     [[params.footer.quicklinks]]
