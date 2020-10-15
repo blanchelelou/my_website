@@ -116,10 +116,10 @@ disqusShortname = ""
       url = "blogs/ipsum"
 
     ##[[params.tiles.showcase]]
-      ##title = "Consequat"
-     ## subtitle = "Ipsum Dolor Sit Amet"
-     ## image = "pic05.jpg"
-      ## url = "blogs/ipsum"
+      title = "My Resume"
+    subtitle = "Find out more about my experiences"
+     image = "paris.jpg"
+      url = "blogs/ipsum"
 
     ##[[params.tiles.showcase]]
       ## title = "Etiam"
