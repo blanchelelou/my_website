@@ -1,186 +1,127 @@
----
-categories:
-- ""
-- ""
-date: "2017-10-31T21:28:43-05:00"
-description: "Which stocks will make you rich"
-draft: false
-image: finance.jpg
-keywords: ""
-slug: ipsum
-title: Financial Stocks
----
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
-# Returns of financial stocks
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
-I will use the `tidyquant` package to download historical data of stock prices, calculate returns, and examine the distribution of returns. 
+<head>
+     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-I will first identify which stocks we want to download data for, and for this we must know their ticker symbol; Apple is known as AAPL, Microsoft as MSFT, McDonald's as MCD, etc. The file `nyse.csv` contains 508 stocks listed on the NYSE, their ticker `symbol`, `name`, the IPO  (Initial Public Offering) year, and the sector and industry the company is in.
+     <title>One Page Resume</title>
 
+     <style type="text/css">
+        * { margin: 0; padding: 0; }
+        body { font: 16px Helvetica, Sans-Serif; line-height: 24px; background: url(images/noise.jpg); }
+        .clear { clear: both; }
+        #page-wrap { width: 800px; margin: 40px auto 60px; }
+        #pic { float: right; margin: -30px 0 0 0; }
+        h1 { margin: 0 0 16px 0; padding: 0 0 16px 0; font-size: 42px; font-weight: bold; letter-spacing: -2px; border-bottom: 1px solid #999; }
+        h2 { font-size: 20px; margin: 0 0 6px 0; position: relative; }
+        h2 span { position: absolute; bottom: 0; right: 0; font-style: italic; font-family: Georgia, Serif; font-size: 16px; color: #999; font-weight: normal; }
+        p { margin: 0 0 16px 0; }
+        a { color: #999; text-decoration: none; border-bottom: 1px dotted #999; }
+        a:hover { border-bottom-style: solid; color: black; }
+        ul { margin: 0 0 32px 17px; }
+        #objective { width: 500px; float: left; }
+        #objective p { font-family: Georgia, Serif; font-style: italic; color: #666; }
+        dt { font-style: italic; font-weight: bold; font-size: 18px; text-align: right; padding: 0 26px 0 0; width: 150px; float: left; height: 100px; border-right: 1px solid #999;  }
+        dd { width: 600px; float: right; }
+        dd.clear { float: none; margin: 0; height: 15px; }
+     </style>
+</head>
 
-```{r load_nyse_data, message=FALSE, warning=FALSE}
-nyse <- read.csv(here::here("data","nyse.csv"))
-```
+<body>
 
-Based on this dataset, I will create a table and a bar plot that shows the number of companies per sector, in descending order
+    <div id="page-wrap">
+    
+        <img src="images/paris.jpg" alt="Photo of Paris" id="pic" />
+    
+        <div id="contact-info" class="vcard">
+        
+            <!-- Microformats! -->
+        
+            <h1 class="fn">C'thulhu</h1>
+        
+            <p>
+                Phone: <span class="tel">+44(0)20 7000 7000</span><br />
+                Email: <a class="email" href="mailto:blelouvier.mfa2021@london.edu">blelouvier.mfa2021@london.edu</a>
+            </p>
+        </div>
+                
+        <div id="objective">
+            <p>
+                I am an outgoing and enthousiastic young professional, seeking a 
+                career that fits my professional skills and personality.I am very passionate about finance, innovation and revolutionary technologies.
+              
+            </p>
+        </div>
+        
+        <div class="clear"></div>
+        
+        <dl>
+            <dd class="clear"></dd>
+            
+            <dt>Education</dt>
+            <dd>
+                <h2>London Business School - London, United Kingdom </h2>
+                <p><strong>MSc:</strong> Financial Analysis<br />
+                <strong>Core courses:</strong> Data Analytics for Finance, Investment Fundamentals, Financial Engineering & Risk Management, Elements of Machine Learning for Business, Data Mining for Business Intelligence</p>
+            
+                   
+                   <h2>London School of Economics - London, United Kingdom </h2>
+                <p><strong>BSc:</strong> Economics and Geography<br />
+                   <strong>Core courses:</strong> Principles of Finance, Quantitative Methods, Microeconomics, Macroeconomis, Technology and Innovation Management</p>
+            </dd>
+            
+            <dd class="clear"></dd>
+            
+            <dt>Skills</dt>
+            <dd>
+                <h2>Office skills</h2>
+                <p>Office and records management, database administration, event organization, customer support, travel coordination</p>
+                
+                <h2>Computer skills</h2>
+                <p>Microsoft productivity software (Word, Excel, etc), Adobe Creative Suite, Windows</p>
+            </dd>
+            
+            <dd class="clear"></dd>
+            
+            <dt>Experience</dt>
+            <dd>
+                
+                <h2>BCG Platinion <span>Visiting Associate in M&A - Paris, France - November 2019 - Present</span></h2>
+                <ul>
+                    <li>Contributing to the future acquisition of a confidential company</li>
+                    <li>Analysis and modelling of additional targets</li>
+                    <li>Staffed on multiple cases to formulate throrough finance analysis </li>
+                    <li>Restructured financial statements (Historical perf, BP Base Case, BP High Case)</li>
+                    
+                    <h2>AIMM <span>Research Assistant - Algarve, Portugal - Summer 2016, 2017, 2018</span></h2>
+                <ul>
+                    <li>Assisted the president with her PhD research and analysis focusing on mother/calf relationship of bottlenose dolphins</li>
+                    <li>Promoted the project through the creation of a bilingual website (https://www.aimmportugal.org/)</li>
+                    <li>Presented the risks of global warming and distributed marketing documents to influential companies </li>
+                </ul>
+                
+                </ul> 
+            </dd>
+            
+            <dd class="clear"></dd>
+            
+            <dt>Hobbies</dt>
+            <dd>Marine Biology,Tennis, Swimming, Travelling</dd>
+            
+            <dd class="clear"></dd>
+            
+            <dt>References</dt>
+            <dd>Available on request</dd>
+            
+            <dd class="clear"></dd>
+        </dl>
+        
+        <div class="clear"></div>
+    
+    </div>
 
-```{r companies_per_sector}
-# count the number of companies by sector
-companies_by_sector <- nyse %>%
-  group_by(sector) %>%
-  count() %>%
-  arrange(desc(n))
+</body>
 
-companies_by_sector %>% 
-  # rename for better reading
-  rename(`number of companies` = n) %>% 
-  # create nice html table
-  kbl() %>%
-  kable_material_dark(bootstrap_options = c("striped", "hover", "condensed", "responsive")) # have a nice HTML table
-```
-
-```{r companies_per_sector} 
-companies_by_sector <- nyse %>%
-  group_by(sector) %>%
-  summarise(count = n()) 
-
-#create a bar plot
-ggplot(companies_by_sector, aes(x = reorder(sector, count), y = count)) + 
-  
-  geom_col(fill = "#1380A1") + 
-  
-  theme_bw()+
-  theme(plot.title = element_text(face = 'bold', size = 15), 
-        axis.text.x = element_text(size = 8), 
-        axis.text.y = element_text(size= 8)) +
-
-# add label to each bar
-  geom_label(aes(label = count), 
-             hjust = 1,
-             vjust = 0.5,
-             fill = NA,
-             label.size = NA,
-             color = 'White',
-             size = 4) +
-  
-  labs(x = "", 
-       y = "Number of Companies", 
-       title = 'Finance & Consumer Services companies reign NYSE',
-       subtitle = 'NYSE number of companies by sector') +
-  
-  coord_flip()
-
-```
-
-Next, I have chosen a few stocks to analyse.
-
-```{r get_price_data, message=FALSE, warning=FALSE, cache=TRUE}
-# Notice the cache=TRUE argument in the chunk options. Because getting data is time consuming, 
-# cache=TRUE means that once it downloads data, the chunk will not run again next time you knit your Rmd
-
-myStocks <- c("AXP","BLK","KO","AMZN","MCD","BP","SPY" ) %>%
-  tq_get(get  = "stock.prices",
-         from = "2011-01-01",
-         to   = "2020-08-31") %>%
-  group_by(symbol) 
-  
-# examine the structure of the resulting data frame
-glimpse(myStocks) 
-
-```
-
-Financial performance analysis depend on returns; If I buy a stock today for 100 and I sell it tomorrow for 101.75, my one-day return, assuming no transaction costs, is 1.75%. So given the adjusted closing prices, our first step is to calculate daily and monthly returns.
-
-
-```{r calculate_returns, message=FALSE, warning=FALSE, cache=TRUE}
-
-#calculate daily returns
-myStocks_returns_daily <- myStocks %>%
-  tq_transmute(select     = adjusted, 
-               mutate_fun = periodReturn, 
-               period     = "daily", 
-               type       = "log",
-               col_rename = "daily_returns",
-               cols = c(nested.col))  
-
-#calculate monthly  returns
-myStocks_returns_monthly <- myStocks %>%
-  tq_transmute(select     = adjusted, 
-               mutate_fun = periodReturn, 
-               period     = "monthly", 
-               type       = "arithmetic",
-               col_rename = "monthly_returns",
-               cols = c(nested.col)) 
-```
-
-Below is q table with the monthly returns, min, max, median, and SD for each of the stocks.
-
-```{r summarise_monthly_returns}
-
-myStocks_returns_monthly_summary <- myStocks_returns_monthly %>% 
-  group_by(symbol) %>% 
-  summarise(min = min(monthly_returns), 
-            median = median(monthly_returns), 
-            max = max(monthly_returns), 
-            mean = mean(monthly_returns), 
-            sd = sd(monthly_returns)) # calculate summary statistics for monthly returns by stock
-
-myStocks_returns_monthly_summary %>% 
-  kbl() %>%
-  kable_material_dark(bootstrap_options = c("striped", "hover", "condensed", "responsive")) # have a nice HTML table
-
-```
-
-Below is a density plot, using `geom_density()`, for each of the stocks.
-
-```{r density_monthly_returns}
-
-myStocks_returns_monthly %>% 
-  filter(symbol != "SPY") %>% # only display density of the stocks (not the ETF)
-  ggplot(aes(x = monthly_returns, fill = symbol)) + # add some color (fill) just for fun
-  geom_density() + 
-  facet_wrap(~symbol) + # create a density plot for each stock
-  labs(title = "Distribution of monthly returns per stock", 
-       x = "Monthly returns", y = "Density") +
-  theme(legend.position = "none") # show no legend
-
-```
-
-From this plot, we can infer that Blackrock (BLK) is the riskiest plot and is highly volatile because its deviation from 0.0 is the strongest. In contrast, Coca Cola (KO) is the least risky and is risk averse with small changes in monthly return.
-
-Finally, make a plot that shows the expected monthly return (mean) of a stock on the Y axis and the risk (standard deviation) in the X-axis. Please use `ggrepel::geom_text_repel()` to label each stock
-
-``` {r risk_return_plot}
-
-myStocks_returns_monthly_summary %>% 
-  
-  # only display the stocks (not the ETF)
-  filter(symbol != "SPY") %>% 
-  
-  # plot scatterplot and increase size of points
-  ggplot(aes(x=sd, y = mean, label = symbol)) +
-  geom_point(aes(colour = symbol), size = 4) +
-  
-  # add the stock names as labels to the points
-  ggrepel::geom_text_repel(aes(colour = symbol)) + 
-  
-  # add title and axis labels to graph 
-  labs(title = 'Risk/Return profile of stocks', subtitle = 'Higher the risk, higher the gain ?',
-       x = 'Risk (standard deviation of monthly returns)', 
-       y ="Average monthly return") +
-  
-  # use a nice theme
-  theme_bw() + 
-  
-  # display x values as percentages
-  scale_x_continuous(labels = scales::percent) + 
-  
-  # display y values as percentages
-  scale_y_continuous(labels = scales::percent) + 
-  
-  # hide legend
-  theme(legend.position = "none") 
-
-```
-
-The plot shows Amazon (AMZN) is the stock with the strongest risk-reward profile : it has the highest average monthly return and has the highest risk as indicated by its position on the top right corner of the graph. Indeed, in general, higher risks lead to a higher mean monthly return. However, what is interesting to note is BP's position that proves a high risk does not necessarily imply a high return - BP has the lowest monthly returns.
+</html>
