@@ -7,7 +7,7 @@ description: How satisfied are your employees?
 draft: false
 image: employee.jpg
 keywords: ""
-slug: magna
+slug: ibm
 title: Your people matter
 
 ---

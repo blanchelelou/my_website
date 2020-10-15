@@ -7,7 +7,7 @@ description:
 draft: false
 image: movie.jpg
 keywords: ""
-slug: aliquam
+slug: movie
 title: Does Steven Spielberg really beat Tim Burton in IMDB ratings?
 ---
 

@@ -1,0 +1,319 @@
+<!DOCTYPE HTML>
+<html>
+
+    <head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta name="description" content="Blanche&#39;s description">
+	<meta name="author" content="Blanche">
+	<meta name="generator" content="Hugo 0.75.1" />
+	<title>The social media trap &middot; Blanche</title>
+	<!-- Stylesheets -->
+	
+	<link rel="stylesheet" href="/css/main.css"/>
+	
+	
+
+	
+
+	<!-- Custom Fonts -->
+	<link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="js/ie/html5shiv.js"></script>
+	<script src="js/ie/html5shiv.jsrespond.min.js"></script>
+	<![endif]-->
+</head>
+
+    <body>
+
+    <!-- Wrapper -->
+        <div id="wrapper">
+
+            <!-- Header -->
+    <header id="header" class="alt">
+        <a href="/" class="logo"><strong>Portfolio</strong> <span>By Blanche Lelouvier</span></a>
+        <nav>
+            <a href="#menu">Menu</a>
+        </nav>
+    </header>
+
+<!-- Menu -->
+    <nav id="menu">
+        <ul class="links">
+            
+                <li><a href="/">Home</a></li>
+            
+                <li><a href="/blogs">Blogs</a></li>
+            
+                <li><a href="/blogs/ipsum">Generic Blog</a></li>
+            
+                <li><a href="/elements.html">Elements</a></li>
+            
+
+        </ul>
+        <ul class="actions vertical">
+            
+                <li><a href="/blogs" class="button special fit">My projects</a></li>
+            
+            
+                <li><a href="/" class="button fit">Log In</a></li>
+            
+        </ul>
+    </nav>
+
+        <!-- Main -->
+            <div id="main" class="alt">
+
+                
+                    <section id="one">
+                        <div class="inner">
+                            <header class="major">
+                                <h1>The social media trap</h1>
+                            </header>
+                            
+                                <span class="image main"><img src="/img/blogs/media.jpg" alt="" /></span>
+                            
+                            <h1 id="general-social-survey-gss">General Social Survey (GSS)</h1>
+<p>The <a href="http://www.gss.norc.org/">General Social Survey (GSS)</a> gathers data on American society in order to monitor and explain trends in attitudes, behaviours, and attributes. Many trends have been tracked for decades, so one can see the evolution of attitudes, etc in American Society.</p>
+<p>In this section, we analyze data from the <strong>2016 GSS sample data</strong>, using it to estimate values of <em>population parameters</em> of interest about US adults. The GSS sample data file has 2867 observations of 935 variables, but we are only interested in very few of these variables and you are using a smaller file.</p>
+<pre><code class="language-{r," data-lang="{r,">gss &lt;- read_csv(here::here(&quot;data&quot;, &quot;smallgss2016.csv&quot;), 
+                na = c(&quot;&quot;, &quot;Don't know&quot;,
+                       &quot;No answer&quot;, &quot;Not applicable&quot;))
+</code></pre><p>We will be creating 95% confidence intervals for population parameters. The variables we have are the following:</p>
+<ul>
+<li>hours and minutes spent on email weekly. The responses to these questions are recorded in the <code>emailhr</code> and <code>emailmin</code> variables. For example, if the response is 2.50 hours, this would be recorded as emailhr = 2 and emailmin = 30.</li>
+<li><code>snapchat</code>, <code>instagrm</code>, <code>twitter</code>: whether respondents used these social media in 2016</li>
+<li><code>sex</code>: Female - Male</li>
+<li><code>degree</code>: highest education level attained</li>
+</ul>
+<h2 id="instagram-and-snapchat-by-sex">Instagram and Snapchat, by sex</h2>
+<p>Can we estimate the <em>population</em> proportion of Snapchat or Instagram users in 2016?</p>
+<h3 id="new-variablesnap_insta-measuring-the-union-of-snapchat-and-instagram-users">New variable`snap_insta', measuring the union of snapchat and instagram users</h3>
+<pre><code class="language-{r," data-lang="{r,">gss &lt;- gss %&gt;%
+    mutate(snap_insta = case_when(snapchat == &quot;Yes&quot;                 ~ &quot;Yes&quot;,
+                                instagrm == &quot;Yes&quot;                 ~ &quot;Yes&quot;,    
+                                snapchat == &quot;No&quot; &amp; instagrm == &quot;No&quot;~ &quot;No&quot;,
+                                snapchat == &quot;NA&quot; &amp; instagrm == &quot;NA&quot; ~ &quot;NA&quot;)
+    )
+</code></pre><h3 id="determining-the-proportion-of-snapchat-or-insta-users-in-the-sample-of-those-who-gave-definitive-answers">Determining the proportion of Snapchat or Insta users in the sample, of those who gave definitive answers</h3>
+<pre><code class="language-{r," data-lang="{r,">proportion_snap_insta&lt;- gss %&gt;% 
+  count(snap_insta) %&gt;% 
+  pivot_wider(names_from=snap_insta , values_from=n) %&gt;% 
+  mutate(prop_yes=Yes/(No+Yes))
+  
+proportion_snap_insta %&gt;% 
+
+  # Playing around with KBL package to produce a more aesthetically-pleasant table
+  kbl(col.names = c(&quot;Indefinite Responses&quot;, 
+  &quot;Neither Snapchat nor Insta User&quot;, 
+  &quot;Snapchat or Insta User&quot;, 
+  &quot;Proportion of Snapchat or Insta users in sample&quot;),
+      caption = '37.5% of the sample population use at least either Snapchat or Instagram') %&gt;%
+  kable_styling(fixed_thead = T, 
+  full_width = F, 
+  font_size = 12)
+
+</code></pre><h3 id="constructing-95-confidence-intervals-for-men-and-women-who-used-either-snapchat-or-insta">Constructing 95% confidence intervals for men and women who used either Snapchat or Insta</h3>
+<pre><code class="language-{r," data-lang="{r,">
+#Calculating the proportion of snapchat and insta users, grouped by sex
+gender_split &lt;- gss %&gt;%
+  filter(snap_insta!=&quot;NA&quot;) %&gt;%
+  group_by(sex) %&gt;%
+  summarize(Total = count(sex), 
+  users = count(snap_insta == &quot;Yes&quot;), 
+  Proportion = round(users/Total,3))
+
+#Determining the standard error and subsequently the confidence intervals for both sexes
+library(kableExtra)
+gender_split &lt;- gender_split %&gt;%
+  mutate(std_error = round(sqrt(Proportion*(1-Proportion)/Total),3)) %&gt;%
+  # 95% confidence interval calculation (z score of 2)
+  mutate(lower_level = round(Proportion - 1.96*std_error,3), 
+         upper_level = round(Proportion + 1.96*std_error,3))
+
+#Cleaning up the table
+gender_split%&gt;%
+  rename('Sex' = 'sex',
+         'Lower CI'  = 'lower_level',
+         'Upper CI' = 'upper_level' ,
+         'Standard Error' = 'std_error',  
+         'Number of Users' = 'users', 
+         'Proportion of users' = 'Proportion' )%&gt;%
+  kbl(caption = '95% confidence intervals on the proportion of Snapchat or Insta users, grouped by sex')%&gt;%
+  kable_styling(fixed_thead = T, full_width = F, font_size = 12 )
+</code></pre><h2 id="twitter-by-education-level">Twitter, by education level</h2>
+<p>Can we estimate the <em>population</em> proportion of Twitter users by education level in 2016?.</p>
+<p>There are 5 education levels in variable <code>degree</code> which, in ascending order of years of education, are Lt high school, High School, Junior college, Bachelor, Graduate.</p>
+<h3 id="adjusting-the-variable-type-of-degree">Adjusting the variable type of `degree'</h3>
+<pre><code class="language-{r," data-lang="{r,">twitter_gss&lt;- gss %&gt;% 
+  na.omit(degree) %&gt;% 
+  mutate(degree = factor(degree, 
+                         levels = c(&quot;Lt high school&quot;, 
+                                    &quot;High School&quot;, 
+                                    &quot;Junior college&quot;, 
+                                    &quot;Bachelor&quot;, 
+                                    &quot;Graduate&quot;))) %&gt;% 
+  arrange((degree))
+</code></pre><h3 id="creating-a-new-variable-bachelor_graduate-that-distinguishes-between-pre-and-post-bachelor-degrees">Creating a new variable `bachelor_graduate' that distinguishes between pre and post bachelor degrees</h3>
+<pre><code class="language-{r," data-lang="{r,">twitter_gss &lt;- twitter_gss %&gt;% 
+  mutate(bachelor_graduate = case_when(
+    degree == &quot;Bachelor&quot; |  degree == &quot;Graduate&quot; ~ &quot;Yes&quot;, 
+    degree == &quot;Lt high school&quot; | degree == &quot;High School&quot; | degree == &quot;Junior college&quot; ~ &quot;No&quot;
+    ))
+</code></pre><h3 id="calculating-the-proportion-of-bachelor_graduates-that-use-twitter">Calculating the proportion of <code>bachelor_graduate</code>s that use twitter</h3>
+<pre><code class="language-{r," data-lang="{r,">proportion_twitter&lt;- twitter_gss %&gt;% 
+  filter(bachelor_graduate == &quot;Yes&quot;) %&gt;%
+  count(twitter) %&gt;% 
+  pivot_wider(names_from=twitter , values_from=n) %&gt;% 
+  mutate(prop_yes=Yes/(No+Yes))
+
+proportion_twitter %&gt;% 
+
+  # Playing around with KBL package to produce a more aesthetically-pleasant table
+  kbl(col.names = c(&quot;Indefinite Responses&quot;, 
+  &quot;Do not use Twitter&quot;, 
+  &quot;Twitter User&quot;, 
+  &quot;Proportion of Twitter users in sample of Bachelor Grads&quot;),
+      caption = '23.3% of bachelor grads from the sample population use twitter') %&gt;%
+  kable_styling(fixed_thead = T, full_width = F, font_size = 12, )
+</code></pre><h3 id="constructing-95-confidence-intervals-for-bachelor-grads-who-use-and-dont-use-twitter-excluding-nas">Constructing 95% confidence intervals for bachelor grads who use and don&rsquo;t use twitter (excluding NAs)</h3>
+<pre><code class="language-{r," data-lang="{r,">
+#Calculating the proportion of snapchat and insta users, grouped by sex
+bachelor_prop &lt;- twitter_gss %&gt;%
+  filter(bachelor_graduate ==&quot;Yes&quot;) %&gt;%
+  filter(twitter!=&quot;NA&quot;) %&gt;%
+  group_by(twitter) %&gt;%
+  summarise(count = n()) %&gt;% 
+  mutate(Proportion = count/sum(count))
+
+#Determining the standard error and subsequently the confidence intervals for both sexes
+
+library(kableExtra)
+bachelor_prop &lt;- bachelor_prop %&gt;%
+  mutate(std_error = round(sqrt(Proportion*(1-Proportion)/count),3)) %&gt;%
+  
+  # 95% confidence interval calculation (z score of 2)
+  mutate(lower_level = round(Proportion - 1.96*std_error,3), 
+         upper_level = round(Proportion + 1.96*std_error,3))
+
+#Cleaning up the table
+bachelor_prop %&gt;%
+    # Playing around with KBL package to produce a more aesthetically-pleasant table
+  kbl(col.names = c(&quot;Twitter User?&quot;, 
+  &quot;Total in Sample&quot;,
+  &quot;Proportion of Bachelor Grads&quot;,
+  &quot;Standard Error&quot;, 
+  &quot;Lower CI&quot;,
+  &quot;Upper CI&quot;),
+      caption = '95% confidence intervals on the proportion of bachelor grads, grouped by their twitter use')%&gt;%
+  kable_styling(fixed_thead = T, full_width = F, font_size = 12 )
+</code></pre><p>These confidence intervals do not overlap.</p>
+<h2 id="email-usage">Email usage</h2>
+<p>Can we estimate the <em>population</em> parameter on time spent on email weekly?</p>
+<h3 id="combining-emailhr-and-emailmin-into-a-new-variable-email">Combining emailhr and emailmin into a new variable `email'</h3>
+<pre><code class="language-{r," data-lang="{r,">
+email &lt;- gss %&gt;%
+  mutate_at(vars(emailhr,emailmin), 
+  funs(as.numeric)) %&gt;% 
+  mutate(email=emailmin*(emailhr*60)) %&gt;% 
+  arrange(desc(email))
+
+email
+
+</code></pre><h3 id="finding-the-mean-and-median-number-of-minutes-respondents-spend-on-email-weekly-and-visualising-the-distribution-of-email">Finding the mean and median number of minutes respondents spend on email weekly and visualising the distribution of `email'</h3>
+<pre><code class="language-{r," data-lang="{r,">
+email_summary &lt;- email %&gt;%
+   na.omit(email) %&gt;%
+  summarize(mean = mean(email), 
+  median = median(email)) 
+
+email_summary
+
+ggplot(email, aes(y=email)) +
+  geom_boxplot()+
+  scale_y_log10() +
+  theme_clean() +
+  labs(title=&quot;Boxplot showing how long US Adults spend emailing per week!&quot;,
+       y=&quot;Email Minutes&quot;)
+
+</code></pre><p>Typically, the mean is a better measure when the distribution is roughly normal. However, if the curve is more flat and/or skewed, as is the case here,  the median is the best gauge of the typical amounnt of time Americans spend on email weekly</p>
+<h3 id="calculating-a-95-bootstrap-confidence-interval-for-the-mean-amount-of-time-americans-spend-on-email-weekly">Calculating a 95% bootstrap confidence interval for the mean amount of time Americans spend on email weekly</h3>
+<pre><code class="language-{r," data-lang="{r,">
+ci_bootstrap_email &lt;- email %&gt;% 
+  specify(response = email) %&gt;% 
+  generate(reps = 100, type=&quot;bootstrap&quot;) %&gt;% 
+  calculate(stat = &quot;mean&quot;) %&gt;% 
+  get_confidence_interval(level = 0.95, type = &quot;percentile&quot;) %&gt;% 
+  mutate(lower_ci = lower_ci/60, upper_ci = upper_ci/60)
+
+ci_bootstrap_email %&gt;%
+
+    # Playing around with KBL package to produce a more aesthetically-pleasant table
+  kbl(col.names = c(&quot;Lower CI&quot;,&quot;Upper CI&quot;),
+      caption = '95% bootstap confidence intervals for the mean amount of time Americans spend emailing weekly')%&gt;%
+  kable_styling(fixed_thead = T, full_width = F, font_size = 12 )
+
+</code></pre><h3 id="interpreting-this-interval-in-context-of-the-data-reporting-its-endpoints-in-humanized-units">Interpreting this interval in context of the data, reporting its endpoints in “humanized” units</h3>
+<p>We found the confidence interval for the mean email usage in the sample to be from 6h24m to 7h28m. Given that the sample mean is 6h57m, we this result does not seem odd and fits the narrative of a confidence interval.</p>
+<h3 id="would-you-expect-a-99-confidence-interval-to-be-wider-or-narrower-than-the-interval-you-calculated-above-explain-your-reasoning">Would you expect a 99% confidence interval to be wider or narrower than the interval you calculated above? Explain your reasoning.</h3>
+<p>As we know with confidence intervals, if we increasing our confidence, we also increase the corresponding margin of error, which results in a wider interval. Therefore, if we increase the confidence level to 99%, then we expect the range to compensate by becoming wider.</p>
+
+                        </div>
+                    </section>
+            <!-- Disqus Inject -->
+                
+            </div>
+            
+        <!-- Footer -->
+            
+                <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="icons">
+                
+                    <li><a href="https://github.com/blanchelelou" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+                
+                    <li><a href="https://www.linkedin.com/in/blanche-lelouvier-13b27115a/de?originalSubdomain=uk&amp;challengeId=AQFHtMFYu8r3HQAAAXT5X754tEUTBJdMeGMnZkHEluXf0ZzdtwZdv0jeecMu625ZxKhP4F61s3JzIxOB1t0AuqR3nXoPUVgAGQ&amp;submissionId=c220d11d-2522-3b16-5f6a-640da6de2573" class="icon alt fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+                
+            </ul>
+            <ul class="copyright">
+                <li>&copy; Blanche Lelouvier</li>
+                
+                <li>Design:  <a href="https://www.html5up.net">HTML5 UP</a></li>
+                
+            </ul>
+        </div>
+    </footer>
+
+            
+        </div>
+
+    <!-- Scripts -->
+        <!-- Scripts -->
+    <!-- jQuery -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.scrolly.min.js"></script>
+    <script src="/js/jquery.scrollex.min.js"></script>
+    <script src="/js/skel.min.js"></script>
+    <script src="/js/util.js"></script>
+
+    
+
+    <!-- Main JS -->
+    <script src="/js/main.js"></script>
+
+    
+
+    
+
+    </body>
+</html>

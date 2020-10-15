@@ -7,7 +7,7 @@ description: Who uses social media?
 draft: false
 image: media.jpg
 keywords: ""
-slug: tempus
+slug: socialmedia
 title: The social media trap
 ---
 

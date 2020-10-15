@@ -91,35 +91,37 @@ disqusShortname = ""
     enable = true
     # Display your showcases here.
     
+       [[params.tiles.showcase]]
+      title = "Who is Blanche?"
+    subtitle = "Find out more about my experiences"
+     image = "paris.jpg"
+      url = "blogs/resume"
+      
     [[params.tiles.showcase]]
       title = "Netflix & Chill"
       subtitle = "Does Steven Spielberg really beat Tim Burton in IMDB ratings?"
       image = "movie.jpg"
-      url = "blogs/aliquam"
+      url = "movie"
 
     [[params.tiles.showcase]]
       title = "The social media trap"
       subtitle = "Who uses social media?"
       image = "media.jpg"
-      url = "blogs/tempus"
+      url = "blogs/socialmedia"
 
     [[params.tiles.showcase]]
       title = "Your people matter"
       subtitle = "How satisfied are your employees?"
       image = "employee.jpg"
-      url = "blogs/magna"
+      url = "blogs/ibm"
 
     [[params.tiles.showcase]]
       title = "Financial Stocks"
       subtitle = "Which stocks will make you rich?"
       image = "finance.jpg"
-      url = "blogs/ipsum"
+      url = "blogs/finance"
 
-    [[params.tiles.showcase]]
-      title = "My Resume"
-    subtitle = "Find out more about my experiences"
-     image = "paris.jpg"
-      url = "blogs/blog1"
+ 
 
     ##[[params.tiles.showcase]]
       ## title = "Etiam"

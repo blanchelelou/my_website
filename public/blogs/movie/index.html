@@ -1,0 +1,318 @@
+<!DOCTYPE HTML>
+<html>
+
+    <head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta name="description" content="Blanche&#39;s description">
+	<meta name="author" content="Blanche">
+	<meta name="generator" content="Hugo 0.75.1" />
+	<title>Does Steven Spielberg really beat Tim Burton in IMDB ratings? &middot; Blanche</title>
+	<!-- Stylesheets -->
+	
+	<link rel="stylesheet" href="/css/main.css"/>
+	
+	
+
+	
+
+	<!-- Custom Fonts -->
+	<link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="js/ie/html5shiv.js"></script>
+	<script src="js/ie/html5shiv.jsrespond.min.js"></script>
+	<![endif]-->
+</head>
+
+    <body>
+
+    <!-- Wrapper -->
+        <div id="wrapper">
+
+            <!-- Header -->
+    <header id="header" class="alt">
+        <a href="/" class="logo"><strong>Portfolio</strong> <span>By Blanche Lelouvier</span></a>
+        <nav>
+            <a href="#menu">Menu</a>
+        </nav>
+    </header>
+
+<!-- Menu -->
+    <nav id="menu">
+        <ul class="links">
+            
+                <li><a href="/">Home</a></li>
+            
+                <li><a href="/blogs">Blogs</a></li>
+            
+                <li><a href="/blogs/ipsum">Generic Blog</a></li>
+            
+                <li><a href="/elements.html">Elements</a></li>
+            
+
+        </ul>
+        <ul class="actions vertical">
+            
+                <li><a href="/blogs" class="button special fit">My projects</a></li>
+            
+            
+                <li><a href="/" class="button fit">Log In</a></li>
+            
+        </ul>
+    </nav>
+
+        <!-- Main -->
+            <div id="main" class="alt">
+
+                
+                    <section id="one">
+                        <div class="inner">
+                            <header class="major">
+                                <h1>Does Steven Spielberg really beat Tim Burton in IMDB ratings?</h1>
+                            </header>
+                            
+                                <span class="image main"><img src="/img/blogs/movie.jpg" alt="" /></span>
+                            
+                            <p>In the following I will explore whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not.</p>
+<pre><code class="language-{r" data-lang="{r">knitr::include_graphics(here::here(&quot;images&quot;, &quot;directors.png&quot;), error = FALSE)
+</code></pre><blockquote>
+<p>First, I reproduce the above graph.</p>
+</blockquote>
+<pre><code class="language-{r" data-lang="{r">movies &lt;- read_csv(here::here(&quot;data&quot;, &quot;movies.csv&quot;))
+glimpse(movies)
+</code></pre><pre><code class="language-{r}" data-lang="{r}">
+selected_directors &lt;- movies %&gt;%
+  
+  select(director, rating) %&gt;%
+  
+  filter(director == &quot;Steven Spielberg&quot; | director == &quot;Tim Burton&quot;) %&gt;%
+  
+  group_by(director) %&gt;%
+  
+  summarize(avg = mean(rating), 
+            sd = sd(rating), 
+            count = n(),
+            tstat = qt(0.975, count-1),
+            se = sd/sqrt(count),
+            lower_ci = avg - tstat*se, 
+            upper_ci = avg + tstat*se) 
+
+selected_directors %&gt;%
+  
+  kable() %&gt;%
+  
+  kable_classic()
+
+</code></pre><pre><code class="language-{r}" data-lang="{r}">
+# Selecting Spielberg and Burton
+
+selected_directors &lt;- movies %&gt;% 
+  
+  filter(director == &quot;Steven Spielberg&quot; | director == &quot;Tim Burton&quot;) %&gt;% 
+  
+  group_by(director) %&gt;% 
+  
+  summarise(
+    mean = mean(rating),
+    sd = sd(rating),
+    count = n(),
+    se = sd / sqrt(count),
+    tstat = qt(0.975, count - 1),
+    lower_ci = mean - tstat * se,
+    upper_ci = mean + tstat * se) 
+
+# Reproducing the plot
+
+ggplot(selected_directors, aes(
+                            x = mean,
+                            y = reorder(director, mean))) +
+
+# Adding area where confidence intervals overlap
+  
+  geom_rect(xmin = 7.27,
+            xmax = 7.33,
+            ymin = 0,
+            ymax = 10,
+            fill = &quot;grey&quot;,
+            aes(alpha = 0.5)) +
+  
+# Adding points to plot the mean
+  
+  geom_point(aes(
+            color = director),
+            size = 4) +
+  
+  
+# Adding confidence interval error bars
+
+  geom_errorbar(aes(
+                    xmin = lower_ci,
+                    xmax = upper_ci,
+                    colour = director,
+                    fill = director),
+                    width = 0.2,
+                    size = 1.5) +
+  
+# Adding mean labels
+  
+  geom_text(aes(
+            label = round(mean, 2)),
+            size = 5,
+            hjust = 0.4,
+            vjust = -1) +
+  
+# Setting fill colors
+  
+  scale_fill_manual(values = c(&quot;#FA8072&quot;, &quot;#48D1CC&quot;)) +
+  
+# Adding confidence interval labels
+  
+  geom_text(aes(
+                label = round(lower_ci, 1.4)),
+                hjust = 4,
+                vjust = - 1) +
+  
+  geom_text(aes(
+                label = round(upper_ci, 1.4)),
+                hjust = - 4,
+                vjust = - 1) +
+  
+# Adding theme
+  
+  theme_bw() +
+  
+# Removing legend
+  
+  theme(legend.position = &quot;none&quot;) +
+  
+# Adding titles to plot and axes
+  
+  theme(plot.title = element_text(face = &quot;bold&quot;)) +
+  
+  labs(title = &quot;Do Spielberg and Burton have the same IMDB ratings?&quot;,
+       subtitle = &quot;95% confidence intervals overlap&quot;,
+       x = &quot;Mean IMDB ratings&quot;,
+       y = &quot;&quot;) +
+  
+# Adjusting size
+  
+  theme(aspect.ratio=3.5/5) 
+
+</code></pre><blockquote>
+<p>Now I will perform a hypothesis test with the hypotheses being:</p>
+</blockquote>
+<blockquote>
+<p>Null hypothesis: There is no difference between the mean ratings for Spielberg and Burton</p>
+</blockquote>
+<blockquote>
+<p>Alternative hypothesis: There is a difference between the mean ratings for Spielberg and Burton</p>
+</blockquote>
+<pre><code class="language-{r}" data-lang="{r}">selected_directors &lt;- movies %&gt;%
+  select(director, rating) %&gt;%
+  filter(director == &quot;Steven Spielberg&quot; | director == &quot;Tim Burton&quot;)
+t.test(rating ~ director, selected_directors)
+</code></pre><blockquote>
+<p>The above t test shows that we have to reject the null hypothesis as the p-value is equal to 0.01 and hence &lt; 0.05</p>
+</blockquote>
+<pre><code class="language-{r}" data-lang="{r}">set.seed(1234)
+
+# Running a simulation with the infer package
+
+hypothesis_test &lt;- selected_directors %&gt;%
+  
+  specify(rating ~ director) %&gt;%
+  
+# Null hypothesis is that there is no difference between the two population means
+  
+  hypothesise(null=&quot;independence&quot;) %&gt;%
+  
+  generate(reps=1000,
+           type=&quot;permute&quot;) %&gt;%
+  
+# Obtaining difference in means with bootstrap function
+  
+  calculate(stat=&quot;diff in means&quot;,
+            order = c(&quot;Steven Spielberg&quot;,&quot;Tim Burton&quot;))
+
+difference_ratings &lt;- selected_directors %&gt;%
+  
+  specify(rating ~ director) %&gt;%
+  
+  calculate(stat = &quot;diff in means&quot;, order = c(&quot;Steven Spielberg&quot;,&quot;Tim Burton&quot;))
+
+# Get p_Value through infer package
+
+p_value &lt;- hypothesis_test %&gt;%
+  
+  get_p_value(obs_stat = difference_ratings,
+              direction = &quot;both&quot;)
+
+kbl(p_value, 
+    col.names=c(&quot;p-value&quot;),
+    caption=&quot;Null distribution&quot;) %&gt;%
+
+kable_classic()
+
+</code></pre><blockquote>
+<p>The simulation-based test shows again that the p-value is &lt; the alpha value. Hence, we reject the null-hypothesis.</p>
+</blockquote>
+
+                        </div>
+                    </section>
+            <!-- Disqus Inject -->
+                
+            </div>
+            
+        <!-- Footer -->
+            
+                <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="icons">
+                
+                    <li><a href="https://github.com/blanchelelou" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+                
+                    <li><a href="https://www.linkedin.com/in/blanche-lelouvier-13b27115a/de?originalSubdomain=uk&amp;challengeId=AQFHtMFYu8r3HQAAAXT5X754tEUTBJdMeGMnZkHEluXf0ZzdtwZdv0jeecMu625ZxKhP4F61s3JzIxOB1t0AuqR3nXoPUVgAGQ&amp;submissionId=c220d11d-2522-3b16-5f6a-640da6de2573" class="icon alt fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+                
+            </ul>
+            <ul class="copyright">
+                <li>&copy; Blanche Lelouvier</li>
+                
+                <li>Design:  <a href="https://www.html5up.net">HTML5 UP</a></li>
+                
+            </ul>
+        </div>
+    </footer>
+
+            
+        </div>
+
+    <!-- Scripts -->
+        <!-- Scripts -->
+    <!-- jQuery -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.scrolly.min.js"></script>
+    <script src="/js/jquery.scrollex.min.js"></script>
+    <script src="/js/skel.min.js"></script>
+    <script src="/js/util.js"></script>
+
+    
+
+    <!-- Main JS -->
+    <script src="/js/main.js"></script>
+
+    
+
+    
+
+    </body>
+</html>
