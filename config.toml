@@ -101,7 +101,7 @@ disqusShortname = ""
       title = "Netflix & Chill"
       subtitle = "Does Steven Spielberg really beat Tim Burton in IMDB ratings?"
       image = "movie.jpg"
-      url = "movie"
+      url = "blogs/movies"
 
     [[params.tiles.showcase]]
       title = "The social media trap"

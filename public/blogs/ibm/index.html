@@ -1,0 +1,572 @@
+<!DOCTYPE HTML>
+<html>
+
+    <head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta name="description" content="Blanche&#39;s description">
+	<meta name="author" content="Blanche">
+	<meta name="generator" content="Hugo 0.75.1" />
+	<title>Your people matter &middot; Blanche</title>
+	<!-- Stylesheets -->
+	
+	<link rel="stylesheet" href="/css/main.css"/>
+	
+	
+
+	
+
+	<!-- Custom Fonts -->
+	<link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="js/ie/html5shiv.js"></script>
+	<script src="js/ie/html5shiv.jsrespond.min.js"></script>
+	<![endif]-->
+</head>
+
+    <body>
+
+    <!-- Wrapper -->
+        <div id="wrapper">
+
+            <!-- Header -->
+    <header id="header" class="alt">
+        <a href="/" class="logo"><strong>Portfolio</strong> <span>By Blanche Lelouvier</span></a>
+        <nav>
+            <a href="#menu">Menu</a>
+        </nav>
+    </header>
+
+<!-- Menu -->
+    <nav id="menu">
+        <ul class="links">
+            
+                <li><a href="/">Home</a></li>
+            
+                <li><a href="/blogs">Blogs</a></li>
+            
+                <li><a href="/blogs/ipsum">Generic Blog</a></li>
+            
+                <li><a href="/elements.html">Elements</a></li>
+            
+
+        </ul>
+        <ul class="actions vertical">
+            
+                <li><a href="/blogs" class="button special fit">My projects</a></li>
+            
+            
+                <li><a href="/" class="button fit">Log In</a></li>
+            
+        </ul>
+    </nav>
+
+        <!-- Main -->
+            <div id="main" class="alt">
+
+                
+                    <section id="one">
+                        <div class="inner">
+                            <header class="major">
+                                <h1>Your people matter</h1>
+                            </header>
+                            
+                                <span class="image main"><img src="/img/blogs/employee.jpg" alt="" /></span>
+                            
+                            <h1 id="ibm-hr-analytics">IBM HR Analytics</h1>
+<p><img src="https://www.techfunnel.com/wp-content/uploads/2018/02/Benefits-of-HR-Metrics-and-Analytics.jpg" alt=""></p>
+<p>We will analyze a data set on Human Resource Analytics.</p>
+<p>The <a href="https://www.kaggle.com/pavansubhasht/ibm-hr-analytics-attrition-dataset">IBM HR Analytics Employee Attrition &amp; Performance data set</a> is a fictional data set created by IBM data scientists.</p>
+<p>Among other things, the data set includes employees' income, their distance from work, their position in the company, their level of education, etc. A full description can be found on the website.</p>
+<pre><code class="language-{r" data-lang="{r">library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(lubridate)
+library(fivethirtyeight)
+library(here)
+library(skimr)
+library(janitor)
+library(vroom)
+library(tidyquant)
+library(rvest)    # scrape websites
+library(purrr)  
+library(lubridate) #to handle dates
+library(kableExtra)
+library(knitr)
+library(dplyr)
+library(gapminder)
+library(ggplot2)
+library(patchwork)
+library(scales)
+library(tidytext)
+</code></pre><h2 id="load-data">Load Data</h2>
+<p>First, we load the data.</p>
+<pre><code class="language-{r}" data-lang="{r}">
+#load the data set
+hr_dataset &lt;- read_csv(here::here(&quot;data&quot;, &quot;datasets_1067_1925_WA_Fn-UseC_-HR-Employee-Attrition.csv&quot;))
+
+#glimpse to get a quick overview of the data
+glimpse(hr_dataset)
+
+</code></pre><blockquote>
+<p>Data set reveals that there are 9 qualitative and 26 quantitative parameters about employees working at IBM. However, this is not a true picture as there are many level-based and rating-based variables such as Daily Rate, Environment Satisfaction etc. which have been coded as numerical values. Therefore, a data cleaning is necessary.</p>
+</blockquote>
+<blockquote>
+<p>One important observation is that the data has no missing values.</p>
+</blockquote>
+<h2 id="clean-data">Clean Data</h2>
+<p>Next, we clean the data set, as variable names are in capital letters, some variables are not really necessary, and some variables, e.g., <code>education</code> are given as a number rather than a more useful description.</p>
+<pre><code class="language-{r}" data-lang="{r}">
+#clean the data
+hr_cleaned &lt;- hr_dataset %&gt;% 
+  clean_names() %&gt;% 
+  mutate(
+    education = case_when(
+      education == 1 ~ &quot;Below College&quot;,
+      education == 2 ~ &quot;College&quot;,
+      education == 3 ~ &quot;Bachelor&quot;,
+      education == 4 ~ &quot;Master&quot;,
+      education == 5 ~ &quot;Doctor&quot;
+    ),
+    environment_satisfaction = case_when(
+      environment_satisfaction == 1 ~ &quot;Low&quot;,
+      environment_satisfaction == 2 ~ &quot;Medium&quot;,
+      environment_satisfaction == 3 ~ &quot;High&quot;,
+      environment_satisfaction == 4 ~ &quot;Very High&quot;
+    ),
+    job_satisfaction = case_when(
+      job_satisfaction == 1 ~ &quot;Low&quot;,
+      job_satisfaction == 2 ~ &quot;Medium&quot;,
+      job_satisfaction == 3 ~ &quot;High&quot;,
+      job_satisfaction == 4 ~ &quot;Very High&quot;
+    ),
+    performance_rating = case_when(
+      performance_rating == 1 ~ &quot;Low&quot;,
+      performance_rating == 2 ~ &quot;Good&quot;,
+      performance_rating == 3 ~ &quot;Excellent&quot;,
+      performance_rating == 4 ~ &quot;Outstanding&quot;
+    ),
+    work_life_balance = case_when(
+      work_life_balance == 1 ~ &quot;Bad&quot;,
+      work_life_balance == 2 ~ &quot;Good&quot;,
+      work_life_balance == 3 ~ &quot;Better&quot;,
+      work_life_balance == 4 ~ &quot;Best&quot;
+    )
+  ) %&gt;% 
+  select(age, attrition, daily_rate, department,
+         distance_from_home, education,
+         gender, job_role,environment_satisfaction,
+         job_satisfaction, marital_status,
+         monthly_income, num_companies_worked, percent_salary_hike,
+         performance_rating, total_working_years,
+         work_life_balance, years_at_company,
+         years_since_last_promotion)
+
+</code></pre><p>We decided to glimpse the data to gain an overview of the data set and use the skim output.</p>
+<pre><code class="language-{r}" data-lang="{r}">
+#glimpse to get a quick overview of the data after cleaning
+glimpse(hr_cleaned)
+
+#make sure the data is free from missing values
+skim(hr_cleaned)
+
+</code></pre><blockquote>
+<p>We can see that we are dealing with a nice data set with no missing values. After data cleaning, we are left with 19 parameters in total, of which - 10 are qualitative and 9 are quantitative.</p>
+</blockquote>
+<h2 id="exploratory-data-analysis">Exploratory Data Analysis</h2>
+<h3 id="attrition-rate-across-departments">Attrition rate across departments</h3>
+<pre><code class="language-{r}" data-lang="{r}">
+# creating variable
+overalll_attrition &lt;- hr_cleaned %&gt;% 
+  # grouping by attrition
+  group_by(attrition) %&gt;% 
+  # counting variable
+  summarise(count = n()) %&gt;% 
+  # adding a variable
+  mutate(overall_attrition = paste(round(count*100/sum(count),0),&quot;%&quot;,sep=&quot;&quot;)) %&gt;%
+  # filtering
+  filter(attrition==&quot;Yes&quot;) %&gt;%  
+  # selecting overall attrition
+  select(overall_attrition) 
+
+hr_cleaned %&gt;% 
+  # grouping by variables
+  group_by(attrition, department) %&gt;% 
+  # counting by grouped variables
+  summarise(count=n()) %&gt;% 
+  # grouping by department
+  group_by(department) %&gt;% 
+  # adding a variable and rounding
+  mutate(attrition_rate=paste(round(count*100/sum(count),0),&quot;%&quot;,sep=&quot;&quot;)) %&gt;% 
+  # filtering
+  filter(attrition==&quot;Yes&quot;) %&gt;% 
+  # selecting certain variables
+  select(department, attrition_rate) %&gt;% 
+  # ungrouping previously grouped variables
+  ungroup() %&gt;% 
+  # adding an additional row with a variable
+  add_row(department = 'Overall' , attrition_rate = overalll_attrition[[1]]) 
+
+</code></pre><blockquote>
+<p>From the chart and table, we can find that the overall attrition is around 16%. This is in line with our previous analysis which indicated that around 20% employees felt dissatisfied with the environmental conditions.</p>
+</blockquote>
+<blockquote>
+<p>Over 20% of Sales employees attrite, and Research &amp; Development has minimum attrition. This data makes sense as Research &amp; Development is a proprietary role and IBM must have put in place non-compete policies for such employees. On the other hand, sales is a highly competitive fast-paced role and thus high attrition is to be expected.</p>
+</blockquote>
+<p>Besides, we think which kind of people leave also matters. If only low performers stay with IBM and all high achievers are leaving, this would be pretty bad. Thus, we have a look at attrition rate in combination with performance_rating.</p>
+<pre><code class="language-{r}" data-lang="{r}">
+ggplot(hr_cleaned, 
+aes(x = attrition, 
+fill = performance_rating)) + 
+
+  # show performance rating proportion by attrition (with bars both at 100%)
+  geom_bar(position = &quot;fill&quot;) + 
+  labs(fill = &quot;performance rating&quot;,
+       y = &quot;proportion&quot;,
+       title = &quot;Attrition and performance rating are independent&quot;,
+       subtitle = &quot;Performance rating proportion by attrition&quot;)
+
+</code></pre><blockquote>
+<p>From the chart, we can see that the performance of people has no influence on attrition.</p>
+</blockquote>
+<h3 id="distribution-of-age-years_at_company-monthly_income-and-years_since_last_promotion">Distribution of <code>age</code>, <code>years_at_company</code>, <code>monthly_income</code> and <code>years_since_last_promotion</code></h3>
+<p>Other important factors for a company are the distributions of <code>age</code>, <code>years_at_company</code>, <code>monthly_income</code> and <code>years_since_last_promotion</code> . Hence, we have a quick look at some summary statistics and the distribution.</p>
+<pre><code class="language-{r}" data-lang="{r}">
+#specifying x axis
+ggplot(hr_cleaned,aes(x=age))+  
+
+  #generating density plot
+  geom_density(fill=&quot;#8b9dc3&quot;)+ 
+  
+  #facet by department
+  facet_wrap(~department) 
+
+</code></pre><pre><code class="language-{r}" data-lang="{r}">
+hr_cleaned %&gt;% 
+
+  #grouped by department
+  group_by(department) %&gt;%  
+  
+  #calculating mean_age and rounded it to 0 decimal place
+  summarize(mean_age=round(mean(age),0), 
+            #calculating median age
+            median_age = round(median(age),0)) 
+
+</code></pre><blockquote>
+<p>The age of employees working in different departments seems to be normally distributed with a mean age of around 37 Yrs and median age of around 36 Yrs.</p>
+</blockquote>
+<blockquote>
+<p>The bump to the right extreme of these curves represent perhaps the senior management age group as they are expected to have more experience.</p>
+</blockquote>
+<pre><code class="language-{r}" data-lang="{r}">
+#specifying x axes
+ggplot(hr_cleaned,aes(x=years_at_company)) + 
+
+  #generating density plot
+  geom_density(fill=&quot;#8b9dc3&quot;) +   
+  
+  #adding x label
+  labs (x=&quot;Years at Company&quot;) + 
+  
+  #facet by department
+  facet_wrap(~department) 
+
+</code></pre><pre><code class="language-{r}" data-lang="{r}">
+hr_cleaned %&gt;% 
+
+  #grouped by department
+  group_by(department) %&gt;%  
+  
+  #calculating mean_years_at_company and rounded it to 0 decimal place
+  summarize(mean_years_at_company=round(mean(years_at_company),0), 
+  
+            #calculating median years_at_company
+            median_years_at_company = round(median(years_at_company),0)) 
+
+</code></pre><blockquote>
+<p>As for years at company, across departments the distribution seems to be very right skewed, suggesting most employees leave in around 15 years.</p>
+</blockquote>
+<pre><code class="language-{r}" data-lang="{r}">
+#specifying x  axes
+ggplot(hr_cleaned,aes(x=monthly_income)) +  
+
+  #generating density plot
+  geom_density(fill=&quot;#8b9dc3&quot;) +  
+  
+  #adding x label
+  labs(x=&quot;Monthly Income&quot;)+ 
+  
+  #facet by department
+  facet_wrap(~department) 
+
+</code></pre><pre><code class="language-{r}" data-lang="{r}">
+hr_cleaned %&gt;% 
+
+  #grouped by department
+  group_by(department) %&gt;%  
+  
+  #calculating mean_monthly_income and rounded it to 0 decimal place
+  summarize(mean_monthly_income=round(mean(monthly_income),0), 
+  
+            #calculating median monthly_income
+            median_monthly_income = round(median(monthly_income),0)) 
+
+</code></pre><blockquote>
+<p>For each department, monthly income is right skewed with average monthly income of Research &amp; Development being on higher side - given the nature of their job role and the experience required. Most of the Sales people draw around USD 5,500 - 6,000 monthly. Human Resources seems to be earning the least on a relative scale.</p>
+</blockquote>
+<pre><code class="language-{r}" data-lang="{r}">
+#specifying x axes
+ggplot(hr_cleaned,aes(x=years_since_last_promotion)) + 
+
+  #generating density plot
+  geom_density(fill=&quot;#8b9dc3&quot;) + 
+  
+  #adding x label
+  labs(x=&quot;Years Since Last Promotion&quot;) +  
+  
+  #facet by department
+  facet_wrap(~department) 
+
+</code></pre><pre><code class="language-{r}" data-lang="{r}">
+hr_cleaned %&gt;% 
+  #grouped by department
+  group_by(department) %&gt;%  
+  
+  #calculating mean_years_since_last_promotion and rounded it to 0 decimal place
+  summarize(mean_years_since_last_promotion=round(mean(years_since_last_promotion),0), 
+  
+  #calculating median years_since_last_promotion
+  median_years_since_last_promotion = round(median(years_since_last_promotion),0)) 
+
+</code></pre><blockquote>
+<p>Distribution of years since last promoted indicates that Human Resources and Sales employees spend more time between promotions than those in Research &amp; Development.</p>
+</blockquote>
+<h3 id="distribution-of-job_satisfaction-and-work_life_balance">Distribution of <code>job_satisfaction</code> and <code>work_life_balance</code></h3>
+<p>We now want to analyse job_satisfaction and work_life_balance. First, we have a look at the mere numbers.</p>
+<pre><code class="language-{r}" data-lang="{r}">
+ggplot(hr_cleaned, 
+aes(x = factor(job_satisfaction, 
+levels = c(&quot;Low&quot;, &quot;Medium&quot;, &quot;High&quot;, &quot;Very High&quot;)))) +
+  geom_bar(aes(y = stat(prop), group = 1)) + 
+  scale_y_continuous(labels = scales::percent) + 
+  labs(x = &quot;Job Satisfaction&quot;,
+       title = &quot;Proportion of People by Job Satisfaction&quot;)
+
+</code></pre><pre><code class="language-{r}" data-lang="{r}">
+hr_cleaned %&gt;%
+  group_by(job_satisfaction) %&gt;%
+  summarise(n = n()) %&gt;%
+  
+  # calculate proportion of people by job satisfaction level
+  mutate(proportion = n / sum(n)) %&gt;% 
+  
+  # reorder job satisfaction levels properly
+  arrange(desc(factor(job_satisfaction, levels = c(&quot;Low&quot;, &quot;Medium&quot;, &quot;High&quot;, &quot;Very High&quot;)))) 
+
+</code></pre><pre><code class="language-{r}" data-lang="{r}">
+ggplot(hr_cleaned, aes(x = factor(work_life_balance, levels = c(&quot;Bad&quot;, &quot;Good&quot;, &quot;Better&quot;, &quot;Best&quot;)))) +
+
+  # do not show absolute counts but the proportion in percent (stat(prop))
+  geom_bar(aes(y = stat(prop), group = 1)) + 
+  
+  # show y values as percentages
+  scale_y_continuous(labels = scales::percent) + 
+  labs(x = &quot;Work-life-balance&quot;,
+       title = &quot;Proportion of People by Work-life-balance&quot;)
+
+</code></pre><pre><code class="language-{r}" data-lang="{r}">
+hr_cleaned %&gt;%
+  group_by(work_life_balance) %&gt;%
+  summarise(n = n()) %&gt;%
+  
+  # calculate proportion of people by work life balance level
+  mutate(proportion = n / sum(n)) %&gt;% 
+  
+  # reorder work life balance levels properly
+  arrange(desc(factor(work_life_balance, levels = c(&quot;Bad&quot;, &quot;Good&quot;, &quot;Better&quot;, &quot;Best&quot;)))) 
+
+</code></pre><blockquote>
+<p>We can see that over 60% people are highly satisfied with their job. Furthermore, only around 5% of people have a bad work-life-balance.</p>
+</blockquote>
+<p>Then, we investigate the relationship between those two variables.</p>
+<pre><code class="language-{r}" data-lang="{r}">
+# order job satisfactioon properly
+ggplot(hr_cleaned, 
+aes(x = factor(job_satisfaction, levels = c(&quot;Low&quot;, &quot;Medium&quot;, &quot;High&quot;, &quot;Very High&quot;)), 
+
+# order w-l-b properly
+fill = factor(work_life_balance, 
+levels = c(&quot;Best&quot;, &quot;Better&quot;, &quot;Good&quot;, &quot;Bad&quot;)))) + 
+  geom_bar(position = &quot;fill&quot;) +
+  labs(fill = &quot;work life balance&quot;,
+       y = &quot;proportion&quot;,
+       title = &quot;Relationship between Job Satisfaction and Work Life Balance&quot;,
+       subtitle = &quot;Work life balance proportion by job satisfaction&quot;,
+       x = &quot;Job Satisfaction&quot;)
+
+</code></pre><blockquote>
+<p>Tt seems like there is no apparent relationship between work-life-balance and job satisfaction!</p>
+</blockquote>
+<h3 id="relationship-between-monthly-income-and-education">Relationship between monthly income and education</h3>
+<pre><code class="language-{r}" data-lang="{r}">
+# show density, not counts (stat(density))
+ggplot(hr_cleaned, 
+mapping = aes(x = monthly_income, y = stat(density))) + 
+  geom_freqpoly(mapping = aes(colour = education)) +
+  labs(x = &quot;monthly income&quot;,
+       title = &quot;Monthly Income Distribution by Education&quot;) +
+       
+  # order facets properly
+  facet_wrap(~factor(education, levels = c(&quot;Below College&quot;, &quot;College&quot;, &quot;Bachelor&quot;, &quot;Master&quot;, &quot;Doctor&quot;))) + 
+  
+  # use a nice theme
+  theme_gdocs() 
+
+</code></pre><pre><code class="language-{r}" data-lang="{r}">
+ggplot(hr_cleaned, 
+aes(y = factor(education, 
+levels = c(&quot;Below College&quot;, &quot;College&quot;, &quot;Bachelor&quot;, &quot;Master&quot;, &quot;Doctor&quot;)), 
+                       x = monthly_income)) +
+  geom_boxplot() +
+  labs(x = &quot;Monthly Income&quot;,
+       y = &quot;Education&quot;,
+       title = &quot;Monthly Income Boxplots by Education&quot;)
+
+</code></pre><blockquote>
+<p>In the boxplot above, we can see that the median monthly income is higher with higher education, with the exemption of a lower median monthly income for a Bachelor education as opposed to College education.</p>
+</blockquote>
+<p>Then we look at average monthly income by education level.</p>
+<pre><code class="language-{r}" data-lang="{r}">
+avg_income_by_edu &lt;- hr_cleaned %&gt;% 
+  group_by(education) %&gt;% 
+  
+  # compute average monthly income by education level
+  summarise(mean = mean(monthly_income)) 
+
+# order education levels properly
+ggplot(avg_income_by_edu, 
+aes(x = factor(education, levels = c(&quot;Below College&quot;, &quot;College&quot;, &quot;Bachelor&quot;, &quot;Master&quot;, &quot;Doctor&quot;)), y = mean)) +
+  geom_col() +
+  labs(x = &quot;Education Level&quot;,
+       y = &quot;Average Monthly Income&quot;,
+       title = &quot;Higher Education Means Higher Average Income!&quot;)
+</code></pre><blockquote>
+<p>It also shows a tendency for higher education yielding higher average monthly incomes.</p>
+</blockquote>
+<h3 id="relationship-between-monthly-income-and-gender">Relationship between monthly income and gender</h3>
+<pre><code class="language-{r}" data-lang="{r}">
+# show density, not counts (stat(density))
+ggplot(hr_cleaned, mapping = aes(x = monthly_income, y = stat(density))) + 
+  geom_freqpoly(mapping = aes(colour = gender)) +
+  labs(x = &quot;Monthly Income&quot;,
+       title = &quot;Monthly Income Distribution by Gender&quot;) +
+  facet_wrap(~gender)
+
+</code></pre><pre><code class="language-{r}" data-lang="{r}">
+ggplot(hr_cleaned, 
+aes(y = gender, x = monthly_income)) +
+  geom_boxplot() +
+  labs(x = &quot;Monthly Income&quot;,
+       y = &quot;Gender&quot;,
+       title = &quot;Monthly Income Boxplots by Gender&quot;)
+
+</code></pre><blockquote>
+<p>Although it is expected to have a gender pay gap, it seems like women are better off than men at IBM.</p>
+</blockquote>
+<h3 id="relationship-between-income-and-job-role">Relationship between income and job role.</h3>
+<pre><code class="language-{r}" data-lang="{r}">
+ggplot(hr_cleaned, aes(y = reorder(job_role, monthly_income), x = monthly_income)) + # order by monthly income
+  geom_boxplot() +
+  labs(x = &quot;Monthly Income&quot;,
+       y = &quot;Job Role&quot;,
+       title = &quot;Monthly Income Boxplots by Job Role&quot;)
+
+</code></pre><blockquote>
+<p>As it seems, managers and research directors are the highest paid at IBM. And Sales representatives are least well paid.</p>
+</blockquote>
+<p>Then we brings the effect of age given the job role.</p>
+<pre><code class="language-{r}" data-lang="{r}">
+ggplot(hr_cleaned, aes(x = age, y = monthly_income)) +
+  # set opacity of points
+  geom_point(alpha = 0.4) + 
+  # one scatterplot for each job role
+  facet_wrap(~job_role) + 
+  labs(y = &quot;Monthly Income&quot;,
+       title = &quot;Effect of Age on Monthly Income Given the Job Role&quot;)
+
+</code></pre><blockquote>
+<p>Even though the effect of age on monthly income is not too apparent when faceting on job role, we also have to consider that one usually takes on other roles throughout a career.</p>
+</blockquote>
+<h3 id="relationship-betwwen-income-and-age">Relationship betwwen income and age</h3>
+<pre><code class="language-{r}" data-lang="{r}">
+ggplot(hr_cleaned, aes(x = age, y = monthly_income)) + 
+
+  # set opacity of points
+  geom_point(alpha = 0.4) + 
+  geom_smooth() +
+  labs(y = &quot;Monthly Income&quot;,
+       title = &quot;Relationship between Income and Age&quot;)
+
+</code></pre><blockquote>
+<p>This is actually something that seems to be intuitive for most people: higher income with higher age, as staying with the same company for a long time means, you have gone through some tough times together, and therefore had some paycheck increases over the years.</p>
+</blockquote>
+
+                        </div>
+                    </section>
+            <!-- Disqus Inject -->
+                
+            </div>
+            
+        <!-- Footer -->
+            
+                <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="icons">
+                
+                    <li><a href="https://github.com/blanchelelou" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+                
+                    <li><a href="https://www.linkedin.com/in/blanche-lelouvier-13b27115a/de?originalSubdomain=uk&amp;challengeId=AQFHtMFYu8r3HQAAAXT5X754tEUTBJdMeGMnZkHEluXf0ZzdtwZdv0jeecMu625ZxKhP4F61s3JzIxOB1t0AuqR3nXoPUVgAGQ&amp;submissionId=c220d11d-2522-3b16-5f6a-640da6de2573" class="icon alt fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+                
+            </ul>
+            <ul class="copyright">
+                <li>&copy; Blanche Lelouvier</li>
+                
+                <li>Design:  <a href="https://www.html5up.net">HTML5 UP</a></li>
+                
+            </ul>
+        </div>
+    </footer>
+
+            
+        </div>
+
+    <!-- Scripts -->
+        <!-- Scripts -->
+    <!-- jQuery -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.scrolly.min.js"></script>
+    <script src="/js/jquery.scrollex.min.js"></script>
+    <script src="/js/skel.min.js"></script>
+    <script src="/js/util.js"></script>
+
+    
+
+    <!-- Main JS -->
+    <script src="/js/main.js"></script>
+
+    
+
+    
+
+    </body>
+</html>
