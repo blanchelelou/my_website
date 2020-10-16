@@ -3,7 +3,7 @@ categories:
 - ""
 - ""
 date: "2017-10-31T21:28:43-05:00"
-description: "Which stocks will make you rich"
+description: "Which stocks will make you rich?"
 draft: false
 image: finance.jpg
 keywords: ""

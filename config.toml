@@ -53,8 +53,8 @@ disqusShortname = ""
 
     [[params.navigation.links]]
       name = "Generic Blog"
-      url = "blogs/ipsum"
-
+      url = "blogs/resume"
+      
     [[params.navigation.links]]
       name = "Elements"
       url = "elements.html"
@@ -120,8 +120,6 @@ disqusShortname = ""
       subtitle = "Which stocks will make you rich?"
       image = "finance.jpg"
       url = "blogs/finance"
-
- 
 
     ##[[params.tiles.showcase]]
       ## title = "Etiam"

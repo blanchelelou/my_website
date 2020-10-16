@@ -2,8 +2,8 @@
 categories:
 - ""
 - ""
-date: "2017-10-31T22:42:51-05:00"
-description:
+date: "2020-10-07"
+description: Find out more about my experiences
 draft: false
 image: paris.jpg
 keywords: ""
@@ -12,7 +12,7 @@ title: Who is Blanche?
 ---
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
