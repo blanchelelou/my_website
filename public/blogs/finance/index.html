@@ -82,12 +82,18 @@
                             
                                 <span class="image main"><img src="/img/blogs/finance.jpg" alt="" /></span>
                             
-                            <h1 id="returns-of-financial-stocks">Returns of financial stocks</h1>
+                            
+<script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
+<link href="/rmarkdown-libs/lightable/lightable.css" rel="stylesheet" />
+
+
+<div id="returns-of-financial-stocks" class="section level1">
+<h1>Returns of financial stocks</h1>
 <p>I will use the <code>tidyquant</code> package to download historical data of stock prices, calculate returns, and examine the distribution of returns.</p>
-<p>I will first identify which stocks we want to download data for, and for this we must know their ticker symbol; Apple is known as AAPL, Microsoft as MSFT, McDonald&rsquo;s as MCD, etc. The file <code>nyse.csv</code> contains 508 stocks listed on the NYSE, their ticker <code>symbol</code>, <code>name</code>, the IPO  (Initial Public Offering) year, and the sector and industry the company is in.</p>
-<pre><code class="language-{r" data-lang="{r">nyse &lt;- read.csv(here::here(&quot;data&quot;,&quot;nyse.csv&quot;))
-</code></pre><p>Based on this dataset, I will create a table and a bar plot that shows the number of companies per sector, in descending order</p>
-<pre><code class="language-{r" data-lang="{r"># count the number of companies by sector
+<p>I will first identify which stocks we want to download data for, and for this we must know their ticker symbol; Apple is known as AAPL, Microsoft as MSFT, McDonald’s as MCD, etc. The file <code>nyse.csv</code> contains 508 stocks listed on the NYSE, their ticker <code>symbol</code>, <code>name</code>, the IPO (Initial Public Offering) year, and the sector and industry the company is in.</p>
+<pre class="r"><code>nyse &lt;- read.csv(here::here(&quot;data&quot;,&quot;nyse.csv&quot;))</code></pre>
+<p>Based on this dataset, I will create a table and a bar plot that shows the number of companies per sector, in descending order</p>
+<pre class="r"><code># count the number of companies by sector
 companies_by_sector &lt;- nyse %&gt;%
   group_by(sector) %&gt;%
   count() %&gt;%
@@ -98,18 +104,128 @@ companies_by_sector %&gt;%
   rename(`number of companies` = n) %&gt;% 
   # create nice html table
   kbl() %&gt;%
-  kable_material_dark(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;, &quot;responsive&quot;)) # have a nice HTML table
-</code></pre><pre><code class="language-{r" data-lang="{r">companies_by_sector &lt;- nyse %&gt;%
+  kable_material_dark(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;, &quot;responsive&quot;)) # have a nice HTML table</code></pre>
+<table class=" lightable-material-dark" style='font-family: "Source Sans Pro", helvetica, sans-serif; margin-left: auto; margin-right: auto;'>
+<thead>
+<tr>
+<th style="text-align:left;">
+sector
+</th>
+<th style="text-align:right;">
+number of companies
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Finance
+</td>
+<td style="text-align:right;">
+97
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Consumer Services
+</td>
+<td style="text-align:right;">
+79
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Public Utilities
+</td>
+<td style="text-align:right;">
+60
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Capital Goods
+</td>
+<td style="text-align:right;">
+45
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Health Care
+</td>
+<td style="text-align:right;">
+45
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Energy
+</td>
+<td style="text-align:right;">
+42
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Technology
+</td>
+<td style="text-align:right;">
+40
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Basic Industries
+</td>
+<td style="text-align:right;">
+39
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Consumer Non-Durables
+</td>
+<td style="text-align:right;">
+31
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Miscellaneous
+</td>
+<td style="text-align:right;">
+12
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Transportation
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Consumer Durables
+</td>
+<td style="text-align:right;">
+8
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>companies_by_sector &lt;- nyse %&gt;%
   group_by(sector) %&gt;%
-  summarise(count = n()) 
-
-#create a bar plot
+  summarise(count = n()) </code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre class="r"><code>#create a bar plot
 ggplot(companies_by_sector, aes(x = reorder(sector, count), y = count)) + 
   
   geom_col(fill = &quot;#1380A1&quot;) + 
   
   theme_bw()+
-  theme(plot.title = element_text(face = 'bold', size = 15), 
+  theme(plot.title = element_text(face = &#39;bold&#39;, size = 15), 
         axis.text.x = element_text(size = 8), 
         axis.text.y = element_text(size= 8)) +
 
@@ -119,18 +235,18 @@ ggplot(companies_by_sector, aes(x = reorder(sector, count), y = count)) +
              vjust = 0.5,
              fill = NA,
              label.size = NA,
-             color = 'White',
+             color = &#39;White&#39;,
              size = 4) +
   
   labs(x = &quot;&quot;, 
        y = &quot;Number of Companies&quot;, 
-       title = 'Finance &amp; Consumer Services companies reign NYSE',
-       subtitle = 'NYSE number of companies by sector') +
+       title = &#39;Finance &amp; Consumer Services companies reign NYSE&#39;,
+       subtitle = &#39;NYSE number of companies by sector&#39;) +
   
-  coord_flip()
-
-</code></pre><p>Next, I have chosen a few stocks to analyse.</p>
-<pre><code class="language-{r" data-lang="{r"># Notice the cache=TRUE argument in the chunk options. Because getting data is time consuming, 
+  coord_flip()</code></pre>
+<p><img src="/blogs/blog1_files/figure-html/companies_per_sector2-1.png" width="672" /></p>
+<p>Next, I have chosen a few stocks to analyse.</p>
+<pre class="r"><code># Notice the cache=TRUE argument in the chunk options. Because getting data is time consuming, 
 # cache=TRUE means that once it downloads data, the chunk will not run again next time you knit your Rmd
 
 myStocks &lt;- c(&quot;AXP&quot;,&quot;BLK&quot;,&quot;KO&quot;,&quot;AMZN&quot;,&quot;MCD&quot;,&quot;BP&quot;,&quot;SPY&quot; ) %&gt;%
@@ -140,11 +256,20 @@ myStocks &lt;- c(&quot;AXP&quot;,&quot;BLK&quot;,&quot;KO&quot;,&quot;AMZN&quot;
   group_by(symbol) 
   
 # examine the structure of the resulting data frame
-glimpse(myStocks) 
-
-</code></pre><p>Financial performance analysis depend on returns; If I buy a stock today for 100 and I sell it tomorrow for 101.75, my one-day return, assuming no transaction costs, is 1.75%. So given the adjusted closing prices, our first step is to calculate daily and monthly returns.</p>
-<pre><code class="language-{r" data-lang="{r">
-#calculate daily returns
+glimpse(myStocks) </code></pre>
+<pre><code>## Rows: 17,017
+## Columns: 8
+## Groups: symbol [7]
+## $ symbol   &lt;chr&gt; &quot;AXP&quot;, &quot;AXP&quot;, &quot;AXP&quot;, &quot;AXP&quot;, &quot;AXP&quot;, &quot;AXP&quot;, &quot;AXP&quot;, &quot;AXP&quot;, &quot;AXP…
+## $ date     &lt;date&gt; 2011-01-03, 2011-01-04, 2011-01-05, 2011-01-06, 2011-01-07,…
+## $ open     &lt;dbl&gt; 43.30, 44.41, 44.09, 45.38, 44.93, 44.20, 44.98, 45.44, 44.8…
+## $ high     &lt;dbl&gt; 43.62, 44.41, 45.16, 45.60, 44.96, 44.64, 45.44, 45.79, 45.3…
+## $ low      &lt;dbl&gt; 43.11, 43.20, 43.91, 44.45, 44.00, 44.01, 44.80, 44.83, 44.7…
+## $ close    &lt;dbl&gt; 43.40, 43.95, 45.04, 44.73, 44.36, 44.46, 45.04, 45.00, 45.0…
+## $ volume   &lt;dbl&gt; 7633300, 14066300, 10655300, 6347100, 6387800, 5468000, 5924…
+## $ adjusted &lt;dbl&gt; 37.39257, 37.86644, 38.96515, 38.69696, 38.37687, 38.46337, …</code></pre>
+<p>Financial performance analysis depend on returns; If I buy a stock today for 100 and I sell it tomorrow for 101.75, my one-day return, assuming no transaction costs, is 1.75%. So given the adjusted closing prices, our first step is to calculate daily and monthly returns.</p>
+<pre class="r"><code>#calculate daily returns
 myStocks_returns_daily &lt;- myStocks %&gt;%
   tq_transmute(select     = adjusted, 
                mutate_fun = periodReturn, 
@@ -160,36 +285,198 @@ myStocks_returns_monthly &lt;- myStocks %&gt;%
                period     = &quot;monthly&quot;, 
                type       = &quot;arithmetic&quot;,
                col_rename = &quot;monthly_returns&quot;,
-               cols = c(nested.col)) 
-</code></pre><p>Below is q table with the monthly returns, min, max, median, and SD for each of the stocks.</p>
-<pre><code class="language-{r" data-lang="{r">
-myStocks_returns_monthly_summary &lt;- myStocks_returns_monthly %&gt;% 
+               cols = c(nested.col)) </code></pre>
+<p>Below is q table with the monthly returns, min, max, median, and SD for each of the stocks.</p>
+<pre class="r"><code>myStocks_returns_monthly_summary &lt;- myStocks_returns_monthly %&gt;% 
   group_by(symbol) %&gt;% 
   summarise(min = min(monthly_returns), 
             median = median(monthly_returns), 
             max = max(monthly_returns), 
             mean = mean(monthly_returns), 
-            sd = sd(monthly_returns)) # calculate summary statistics for monthly returns by stock
-
-myStocks_returns_monthly_summary %&gt;% 
+            sd = sd(monthly_returns)) # calculate summary statistics for monthly returns by stock</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre class="r"><code>myStocks_returns_monthly_summary %&gt;% 
   kbl() %&gt;%
-  kable_material_dark(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;, &quot;responsive&quot;)) # have a nice HTML table
-
-</code></pre><p>Below is a density plot, using <code>geom_density()</code>, for each of the stocks.</p>
-<pre><code class="language-{r" data-lang="{r">
-myStocks_returns_monthly %&gt;% 
+  kable_material_dark(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;, &quot;responsive&quot;)) # have a nice HTML table</code></pre>
+<table class=" lightable-material-dark" style='font-family: "Source Sans Pro", helvetica, sans-serif; margin-left: auto; margin-right: auto;'>
+<thead>
+<tr>
+<th style="text-align:left;">
+symbol
+</th>
+<th style="text-align:right;">
+min
+</th>
+<th style="text-align:right;">
+median
+</th>
+<th style="text-align:right;">
+max
+</th>
+<th style="text-align:right;">
+mean
+</th>
+<th style="text-align:right;">
+sd
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+AMZN
+</td>
+<td style="text-align:right;">
+-0.2021917
+</td>
+<td style="text-align:right;">
+0.0252452
+</td>
+<td style="text-align:right;">
+0.2689002
+</td>
+<td style="text-align:right;">
+0.0286514
+</td>
+<td style="text-align:right;">
+0.0816178
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AXP
+</td>
+<td style="text-align:right;">
+-0.2274026
+</td>
+<td style="text-align:right;">
+0.0109193
+</td>
+<td style="text-align:right;">
+0.1320860
+</td>
+<td style="text-align:right;">
+0.0105544
+</td>
+<td style="text-align:right;">
+0.0597018
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BLK
+</td>
+<td style="text-align:right;">
+-0.1435991
+</td>
+<td style="text-align:right;">
+0.0218894
+</td>
+<td style="text-align:right;">
+0.1832121
+</td>
+<td style="text-align:right;">
+0.0141895
+</td>
+<td style="text-align:right;">
+0.0623220
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BP
+</td>
+<td style="text-align:right;">
+-0.2205178
+</td>
+<td style="text-align:right;">
+-0.0000176
+</td>
+<td style="text-align:right;">
+0.2248409
+</td>
+<td style="text-align:right;">
+0.0005053
+</td>
+<td style="text-align:right;">
+0.0651704
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+KO
+</td>
+<td style="text-align:right;">
+-0.1654876
+</td>
+<td style="text-align:right;">
+0.0124894
+</td>
+<td style="text-align:right;">
+0.0839733
+</td>
+<td style="text-align:right;">
+0.0074542
+</td>
+<td style="text-align:right;">
+0.0413339
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MCD
+</td>
+<td style="text-align:right;">
+-0.1484266
+</td>
+<td style="text-align:right;">
+0.0116997
+</td>
+<td style="text-align:right;">
+0.1392470
+</td>
+<td style="text-align:right;">
+0.0123819
+</td>
+<td style="text-align:right;">
+0.0437207
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SPY
+</td>
+<td style="text-align:right;">
+-0.1248712
+</td>
+<td style="text-align:right;">
+0.0146162
+</td>
+<td style="text-align:right;">
+0.1269835
+</td>
+<td style="text-align:right;">
+0.0111722
+</td>
+<td style="text-align:right;">
+0.0381329
+</td>
+</tr>
+</tbody>
+</table>
+<p>Below is a density plot, using <code>geom_density()</code>, for each of the stocks.</p>
+<pre class="r"><code>myStocks_returns_monthly %&gt;% 
   filter(symbol != &quot;SPY&quot;) %&gt;% # only display density of the stocks (not the ETF)
   ggplot(aes(x = monthly_returns, fill = symbol)) + # add some color (fill) just for fun
   geom_density() + 
   facet_wrap(~symbol) + # create a density plot for each stock
   labs(title = &quot;Distribution of monthly returns per stock&quot;, 
        x = &quot;Monthly returns&quot;, y = &quot;Density&quot;) +
-  theme(legend.position = &quot;none&quot;) # show no legend
-
-</code></pre><p>From this plot, we can infer that Blackrock (BLK) is the riskiest plot and is highly volatile because its deviation from 0.0 is the strongest. In contrast, Coca Cola (KO) is the least risky and is risk averse with small changes in monthly return.</p>
+  theme(legend.position = &quot;none&quot;) # show no legend</code></pre>
+<p><img src="/blogs/blog1_files/figure-html/density_monthly_returns-1.png" width="672" /></p>
+<p>From this plot, we can infer that Blackrock (BLK) is the riskiest plot and is highly volatile because its deviation from 0.0 is the strongest. In contrast, Coca Cola (KO) is the least risky and is risk averse with small changes in monthly return.</p>
 <p>Finally, make a plot that shows the expected monthly return (mean) of a stock on the Y axis and the risk (standard deviation) in the X-axis. Please use <code>ggrepel::geom_text_repel()</code> to label each stock</p>
-<pre><code class="language-{r" data-lang="{r">
-myStocks_returns_monthly_summary %&gt;% 
+<pre class="r"><code>myStocks_returns_monthly_summary %&gt;% 
   
   # only display the stocks (not the ETF)
   filter(symbol != &quot;SPY&quot;) %&gt;% 
@@ -202,8 +489,8 @@ myStocks_returns_monthly_summary %&gt;%
   ggrepel::geom_text_repel(aes(colour = symbol)) + 
   
   # add title and axis labels to graph 
-  labs(title = 'Risk/Return profile of stocks', subtitle = 'Higher the risk, higher the gain ?',
-       x = 'Risk (standard deviation of monthly returns)', 
+  labs(title = &#39;Risk/Return profile of stocks&#39;, subtitle = &#39;Higher the risk, higher the gain ?&#39;,
+       x = &#39;Risk (standard deviation of monthly returns)&#39;, 
        y =&quot;Average monthly return&quot;) +
   
   # use a nice theme
@@ -216,9 +503,10 @@ myStocks_returns_monthly_summary %&gt;%
   scale_y_continuous(labels = scales::percent) + 
   
   # hide legend
-  theme(legend.position = &quot;none&quot;) 
-
-</code></pre><p>The plot shows Amazon (AMZN) is the stock with the strongest risk-reward profile : it has the highest average monthly return and has the highest risk as indicated by its position on the top right corner of the graph. Indeed, in general, higher risks lead to a higher mean monthly return. However, what is interesting to note is BP&rsquo;s position that proves a high risk does not necessarily imply a high return - BP has the lowest monthly returns.</p>
+  theme(legend.position = &quot;none&quot;) </code></pre>
+<p><img src="/blogs/blog1_files/figure-html/risk_return_plot-1.png" width="672" /></p>
+<p>The plot shows Amazon (AMZN) is the stock with the strongest risk-reward profile : it has the highest average monthly return and has the highest risk as indicated by its position on the top right corner of the graph. Indeed, in general, higher risks lead to a higher mean monthly return. However, what is interesting to note is BP’s position that proves a high risk does not necessarily imply a high return - BP has the lowest monthly returns.</p>
+</div>
 
                         </div>
                     </section>

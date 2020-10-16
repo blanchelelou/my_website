@@ -3,13 +3,36 @@ categories:
 - ""
 - ""
 date: "2017-10-31T21:28:43-05:00"
-description: "Which stocks will make you rich?"
+description: "What stocks will make you richer?"
 draft: false
 image: finance.jpg
 keywords: ""
 slug: finance
 title: Financial Stocks
 ---
+
+```{r load-libraries, warning=FALSE, message=FALSE, echo=FALSE}
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(lubridate)
+library(fivethirtyeight)
+library(here)
+library(skimr)
+library(janitor)
+library(vroom)
+library(tidyquant)
+library(rvest)    # scrape websites
+library(purrr)  
+library(lubridate) #to handle dates
+library(kableExtra)
+library(knitr)
+library(dplyr)
+library(gapminder)
+library(ggplot2)
+library(patchwork)
+library(scales)
+```
 
 # Returns of financial stocks
 
@@ -39,7 +62,7 @@ companies_by_sector %>%
   kable_material_dark(bootstrap_options = c("striped", "hover", "condensed", "responsive")) # have a nice HTML table
 ```
 
-```{r companies_per_sector} 
+```{r companies_per_sector2} 
 companies_by_sector <- nyse %>%
   group_by(sector) %>%
   summarise(count = n()) 

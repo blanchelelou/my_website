@@ -11,6 +11,27 @@ slug: movies
 title: Does Steven Spielberg really beat Tim Burton in IMDB ratings?
 ---
 
+Load Libraries
+
+```{r load-libraries, echo=FALSE}
+
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(GGally)
+library(readxl)
+library(here)
+library(skimr)
+library(janitor)
+library(broom)
+library(tidyquant)
+library(infer)
+library(openintro)
+library(tidyquant)
+library(scales)
+library(lubridate)
+library(kableExtra)
+```
 In the following I will explore whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not.
 
 ```{r directors, echo=FALSE, out.width="100%"}

@@ -3,7 +3,7 @@ categories:
 - ""
 - ""
 date: "2020-10-07"
-description: Find out more about my experiences
+description: Find out more about my experience
 draft: false
 image: paris.jpg
 keywords: ""

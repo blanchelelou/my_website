@@ -82,15 +82,166 @@
                             
                                 <span class="image main"><img src="/img/blogs/movie.jpg" alt="" /></span>
                             
-                            <p>In the following I will explore whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not.</p>
-<pre><code class="language-{r" data-lang="{r">knitr::include_graphics(here::here(&quot;images&quot;, &quot;directors.png&quot;), error = FALSE)
-</code></pre><blockquote>
+                            
+<script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
+<link href="/rmarkdown-libs/lightable/lightable.css" rel="stylesheet" />
+
+
+<p>Load Libraries</p>
+<pre><code>## ── Attaching packages ───────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.3.2     ✓ purrr   0.3.4
+## ✓ tibble  3.0.3     ✓ dplyr   1.0.2
+## ✓ tidyr   1.1.2     ✓ stringr 1.4.0
+## ✓ readr   1.3.1     ✓ forcats 0.5.0</code></pre>
+<pre><code>## ── Conflicts ──────────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre><code>## Registered S3 method overwritten by &#39;mosaic&#39;:
+##   method                           from   
+##   fortify.SpatialPolygonsDataFrame ggplot2</code></pre>
+<pre><code>## 
+## The &#39;mosaic&#39; package masks several functions from core packages in order to add 
+## additional features.  The original behavior of these functions should not be affected by this.</code></pre>
+<pre><code>## 
+## Attaching package: &#39;mosaic&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:Matrix&#39;:
+## 
+##     mean</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     count, do, tally</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     cross</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     stat</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     binom.test, cor, cor.test, cov, fivenum, IQR, median, prop.test,
+##     quantile, sd, t.test, var</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     max, mean, min, prod, range, sample, sum</code></pre>
+<pre><code>## 
+## Attaching package: &#39;ggthemes&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:mosaic&#39;:
+## 
+##     theme_map</code></pre>
+<pre><code>## Registered S3 method overwritten by &#39;GGally&#39;:
+##   method from   
+##   +.gg   ggplot2</code></pre>
+<pre><code>## here() starts at /Users/blanchelelouvier/Documents/LBS/CA09 Data Analytics/my_website</code></pre>
+<pre><code>## 
+## Attaching package: &#39;skimr&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:mosaic&#39;:
+## 
+##     n_missing</code></pre>
+<pre><code>## 
+## Attaching package: &#39;janitor&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     chisq.test, fisher.test</code></pre>
+<pre><code>## Loading required package: lubridate</code></pre>
+<pre><code>## 
+## Attaching package: &#39;lubridate&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     date, intersect, setdiff, union</code></pre>
+<pre><code>## Loading required package: PerformanceAnalytics</code></pre>
+<pre><code>## Loading required package: xts</code></pre>
+<pre><code>## Loading required package: zoo</code></pre>
+<pre><code>## 
+## Attaching package: &#39;zoo&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     as.Date, as.Date.numeric</code></pre>
+<pre><code>## 
+## Attaching package: &#39;xts&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     first, last</code></pre>
+<pre><code>## 
+## Attaching package: &#39;PerformanceAnalytics&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:graphics&#39;:
+## 
+##     legend</code></pre>
+<pre><code>## Loading required package: quantmod</code></pre>
+<pre><code>## Loading required package: TTR</code></pre>
+<pre><code>## Registered S3 method overwritten by &#39;quantmod&#39;:
+##   method            from
+##   as.zoo.data.frame zoo</code></pre>
+<pre><code>## Version 0.4-0 included new data defaults. See ?getSymbols.</code></pre>
+<pre><code>## ══ Need to Learn tidyquant? ══════════════════════════════════════════════════════════
+## Business Science offers a 1-hour course - Learning Lab #9: Performance Analysis &amp; Portfolio Optimization with tidyquant!
+## &lt;/&gt; Learn more at: https://university.business-science.io/p/learning-labs-pro &lt;/&gt;</code></pre>
+<pre><code>## 
+## Attaching package: &#39;infer&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:mosaic&#39;:
+## 
+##     prop_test, t_test</code></pre>
+<pre><code>## Loading required package: airports</code></pre>
+<pre><code>## Loading required package: cherryblossom</code></pre>
+<pre><code>## Loading required package: usdata</code></pre>
+<pre><code>## 
+## Attaching package: &#39;openintro&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:mosaic&#39;:
+## 
+##     dotPlot</code></pre>
+<pre><code>## The following objects are masked from &#39;package:lattice&#39;:
+## 
+##     ethanol, lsegments</code></pre>
+<pre><code>## 
+## Attaching package: &#39;scales&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:mosaic&#39;:
+## 
+##     rescale</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     discard</code></pre>
+<pre><code>## The following object is masked from &#39;package:readr&#39;:
+## 
+##     col_factor</code></pre>
+<pre><code>## 
+## Attaching package: &#39;kableExtra&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     group_rows</code></pre>
+<p>In the following I will explore whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not.</p>
+<p><img src="/Users/blanchelelouvier/Documents/LBS/CA09 Data Analytics/my_website/images/directors.png" width="100%" /></p>
+<blockquote>
 <p>First, I reproduce the above graph.</p>
 </blockquote>
-<pre><code class="language-{r" data-lang="{r">movies &lt;- read_csv(here::here(&quot;data&quot;, &quot;movies.csv&quot;))
-glimpse(movies)
-</code></pre><pre><code class="language-{r}" data-lang="{r}">
-selected_directors &lt;- movies %&gt;%
+<pre class="r"><code>movies &lt;- read_csv(here::here(&quot;data&quot;, &quot;movies.csv&quot;))</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   title = col_character(),
+##   genre = col_character(),
+##   director = col_character(),
+##   year = col_double(),
+##   duration = col_double(),
+##   gross = col_double(),
+##   budget = col_double(),
+##   cast_facebook_likes = col_double(),
+##   votes = col_double(),
+##   reviews = col_double(),
+##   rating = col_double()
+## )</code></pre>
+<pre class="r"><code>glimpse(movies)</code></pre>
+<pre><code>## Rows: 2,961
+## Columns: 11
+## $ title               &lt;chr&gt; &quot;Avatar&quot;, &quot;Titanic&quot;, &quot;Jurassic World&quot;, &quot;The Aveng…
+## $ genre               &lt;chr&gt; &quot;Action&quot;, &quot;Drama&quot;, &quot;Action&quot;, &quot;Action&quot;, &quot;Action&quot;, …
+## $ director            &lt;chr&gt; &quot;James Cameron&quot;, &quot;James Cameron&quot;, &quot;Colin Trevorro…
+## $ year                &lt;dbl&gt; 2009, 1997, 2015, 2012, 2008, 1999, 1977, 2015, 2…
+## $ duration            &lt;dbl&gt; 178, 194, 124, 173, 152, 136, 125, 141, 164, 93, …
+## $ gross               &lt;dbl&gt; 760505847, 658672302, 652177271, 623279547, 53331…
+## $ budget              &lt;dbl&gt; 2.37e+08, 2.00e+08, 1.50e+08, 2.20e+08, 1.85e+08,…
+## $ cast_facebook_likes &lt;dbl&gt; 4834, 45223, 8458, 87697, 57802, 37723, 13485, 92…
+## $ votes               &lt;dbl&gt; 886204, 793059, 418214, 995415, 1676169, 534658, …
+## $ reviews             &lt;dbl&gt; 3777, 2843, 1934, 2425, 5312, 3917, 1752, 1752, 3…
+## $ rating              &lt;dbl&gt; 7.9, 7.7, 7.0, 8.1, 9.0, 6.5, 8.7, 7.5, 8.5, 7.2,…</code></pre>
+<pre class="r"><code>selected_directors &lt;- movies %&gt;%
   
   select(director, rating) %&gt;%
   
@@ -104,16 +255,98 @@ selected_directors &lt;- movies %&gt;%
             tstat = qt(0.975, count-1),
             se = sd/sqrt(count),
             lower_ci = avg - tstat*se, 
-            upper_ci = avg + tstat*se) 
-
-selected_directors %&gt;%
+            upper_ci = avg + tstat*se) </code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre class="r"><code>selected_directors %&gt;%
   
   kable() %&gt;%
   
-  kable_classic()
-
-</code></pre><pre><code class="language-{r}" data-lang="{r}">
-# Selecting Spielberg and Burton
+  kable_classic()</code></pre>
+<table class=" lightable-classic" style='font-family: "Arial Narrow", "Source Sans Pro", sans-serif; margin-left: auto; margin-right: auto;'>
+<thead>
+<tr>
+<th style="text-align:left;">
+director
+</th>
+<th style="text-align:right;">
+avg
+</th>
+<th style="text-align:right;">
+sd
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+tstat
+</th>
+<th style="text-align:right;">
+se
+</th>
+<th style="text-align:right;">
+lower_ci
+</th>
+<th style="text-align:right;">
+upper_ci
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Steven Spielberg
+</td>
+<td style="text-align:right;">
+7.573913
+</td>
+<td style="text-align:right;">
+0.6949280
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+2.073873
+</td>
+<td style="text-align:right;">
+0.1449025
+</td>
+<td style="text-align:right;">
+7.273404
+</td>
+<td style="text-align:right;">
+7.874422
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Tim Burton
+</td>
+<td style="text-align:right;">
+6.931250
+</td>
+<td style="text-align:right;">
+0.7489715
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+2.131449
+</td>
+<td style="text-align:right;">
+0.1872429
+</td>
+<td style="text-align:right;">
+6.532151
+</td>
+<td style="text-align:right;">
+7.330349
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># Selecting Spielberg and Burton
 
 selected_directors &lt;- movies %&gt;% 
   
@@ -128,9 +361,9 @@ selected_directors &lt;- movies %&gt;%
     se = sd / sqrt(count),
     tstat = qt(0.975, count - 1),
     lower_ci = mean - tstat * se,
-    upper_ci = mean + tstat * se) 
-
-# Reproducing the plot
+    upper_ci = mean + tstat * se) </code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre class="r"><code># Reproducing the plot
 
 ggplot(selected_directors, aes(
                             x = mean,
@@ -205,9 +438,10 @@ ggplot(selected_directors, aes(
   
 # Adjusting size
   
-  theme(aspect.ratio=3.5/5) 
-
-</code></pre><blockquote>
+  theme(aspect.ratio=3.5/5) </code></pre>
+<pre><code>## Warning: Ignoring unknown aesthetics: fill</code></pre>
+<p><img src="/blogs/blog4_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<blockquote>
 <p>Now I will perform a hypothesis test with the hypotheses being:</p>
 </blockquote>
 <blockquote>
@@ -216,14 +450,25 @@ ggplot(selected_directors, aes(
 <blockquote>
 <p>Alternative hypothesis: There is a difference between the mean ratings for Spielberg and Burton</p>
 </blockquote>
-<pre><code class="language-{r}" data-lang="{r}">selected_directors &lt;- movies %&gt;%
+<pre class="r"><code>selected_directors &lt;- movies %&gt;%
   select(director, rating) %&gt;%
   filter(director == &quot;Steven Spielberg&quot; | director == &quot;Tim Burton&quot;)
-t.test(rating ~ director, selected_directors)
-</code></pre><blockquote>
+t.test(rating ~ director, selected_directors)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  rating by director
+## t = 2.7144, df = 30.812, p-value = 0.01078
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  0.1596624 1.1256637
+## sample estimates:
+## mean in group Steven Spielberg       mean in group Tim Burton 
+##                       7.573913                       6.931250</code></pre>
+<blockquote>
 <p>The above t test shows that we have to reject the null hypothesis as the p-value is equal to 0.01 and hence &lt; 0.05</p>
 </blockquote>
-<pre><code class="language-{r}" data-lang="{r}">set.seed(1234)
+<pre class="r"><code>set.seed(1234)
 
 # Running a simulation with the infer package
 
@@ -260,9 +505,27 @@ kbl(p_value,
     col.names=c(&quot;p-value&quot;),
     caption=&quot;Null distribution&quot;) %&gt;%
 
-kable_classic()
-
-</code></pre><blockquote>
+kable_classic()</code></pre>
+<table class=" lightable-classic" style='font-family: "Arial Narrow", "Source Sans Pro", sans-serif; margin-left: auto; margin-right: auto;'>
+<caption>
+<span id="tab:unnamed-chunk-4">Table 1: </span>Null distribution
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+p-value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0.008
+</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
 <p>The simulation-based test shows again that the p-value is &lt; the alpha value. Hence, we reject the null-hypothesis.</p>
 </blockquote>
 

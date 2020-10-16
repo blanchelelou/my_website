@@ -82,51 +82,84 @@
                             
                                 <span class="image main"><img src="/img/blogs/employee.jpg" alt="" /></span>
                             
-                            <h1 id="ibm-hr-analytics">IBM HR Analytics</h1>
-<p><img src="https://www.techfunnel.com/wp-content/uploads/2018/02/Benefits-of-HR-Metrics-and-Analytics.jpg" alt=""></p>
+                            
+
+
+<div id="ibm-hr-analytics" class="section level1">
+<h1>IBM HR Analytics</h1>
+<p><img src="https://www.techfunnel.com/wp-content/uploads/2018/02/Benefits-of-HR-Metrics-and-Analytics.jpg" /></p>
 <p>We will analyze a data set on Human Resource Analytics.</p>
 <p>The <a href="https://www.kaggle.com/pavansubhasht/ibm-hr-analytics-attrition-dataset">IBM HR Analytics Employee Attrition &amp; Performance data set</a> is a fictional data set created by IBM data scientists.</p>
-<p>Among other things, the data set includes employees' income, their distance from work, their position in the company, their level of education, etc. A full description can be found on the website.</p>
-<pre><code class="language-{r" data-lang="{r">library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
-library(mosaic)
-library(ggthemes)
-library(lubridate)
-library(fivethirtyeight)
-library(here)
-library(skimr)
-library(janitor)
-library(vroom)
-library(tidyquant)
-library(rvest)    # scrape websites
-library(purrr)  
-library(lubridate) #to handle dates
-library(kableExtra)
-library(knitr)
-library(dplyr)
-library(gapminder)
-library(ggplot2)
-library(patchwork)
-library(scales)
-library(tidytext)
-</code></pre><h2 id="load-data">Load Data</h2>
+<p>Among other things, the data set includes employees’ income, their distance from work, their position in the company, their level of education, etc. A full description can be found on the website.</p>
+<div id="load-data" class="section level2">
+<h2>Load Data</h2>
 <p>First, we load the data.</p>
-<pre><code class="language-{r}" data-lang="{r}">
-#load the data set
-hr_dataset &lt;- read_csv(here::here(&quot;data&quot;, &quot;datasets_1067_1925_WA_Fn-UseC_-HR-Employee-Attrition.csv&quot;))
-
-#glimpse to get a quick overview of the data
-glimpse(hr_dataset)
-
-</code></pre><blockquote>
+<pre class="r"><code>#load the data set
+hr_dataset &lt;- read_csv(here::here(&quot;data&quot;, &quot;datasets_1067_1925_WA_Fn-UseC_-HR-Employee-Attrition.csv&quot;))</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_double(),
+##   Attrition = col_character(),
+##   BusinessTravel = col_character(),
+##   Department = col_character(),
+##   EducationField = col_character(),
+##   Gender = col_character(),
+##   JobRole = col_character(),
+##   MaritalStatus = col_character(),
+##   Over18 = col_character(),
+##   OverTime = col_character()
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<pre class="r"><code>#glimpse to get a quick overview of the data
+glimpse(hr_dataset)</code></pre>
+<pre><code>## Rows: 1,470
+## Columns: 35
+## $ Age                      &lt;dbl&gt; 41, 49, 37, 33, 27, 32, 59, 30, 38, 36, 35, …
+## $ Attrition                &lt;chr&gt; &quot;Yes&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, …
+## $ BusinessTravel           &lt;chr&gt; &quot;Travel_Rarely&quot;, &quot;Travel_Frequently&quot;, &quot;Trave…
+## $ DailyRate                &lt;dbl&gt; 1102, 279, 1373, 1392, 591, 1005, 1324, 1358…
+## $ Department               &lt;chr&gt; &quot;Sales&quot;, &quot;Research &amp; Development&quot;, &quot;Research…
+## $ DistanceFromHome         &lt;dbl&gt; 1, 8, 2, 3, 2, 2, 3, 24, 23, 27, 16, 15, 26,…
+## $ Education                &lt;dbl&gt; 2, 1, 2, 4, 1, 2, 3, 1, 3, 3, 3, 2, 1, 2, 3,…
+## $ EducationField           &lt;chr&gt; &quot;Life Sciences&quot;, &quot;Life Sciences&quot;, &quot;Other&quot;, &quot;…
+## $ EmployeeCount            &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
+## $ EmployeeNumber           &lt;dbl&gt; 1, 2, 4, 5, 7, 8, 10, 11, 12, 13, 14, 15, 16…
+## $ EnvironmentSatisfaction  &lt;dbl&gt; 2, 3, 4, 4, 1, 4, 3, 4, 4, 3, 1, 4, 1, 2, 3,…
+## $ Gender                   &lt;chr&gt; &quot;Female&quot;, &quot;Male&quot;, &quot;Male&quot;, &quot;Female&quot;, &quot;Male&quot;, …
+## $ HourlyRate               &lt;dbl&gt; 94, 61, 92, 56, 40, 79, 81, 67, 44, 94, 84, …
+## $ JobInvolvement           &lt;dbl&gt; 3, 2, 2, 3, 3, 3, 4, 3, 2, 3, 4, 2, 3, 3, 2,…
+## $ JobLevel                 &lt;dbl&gt; 2, 2, 1, 1, 1, 1, 1, 1, 3, 2, 1, 2, 1, 1, 1,…
+## $ JobRole                  &lt;chr&gt; &quot;Sales Executive&quot;, &quot;Research Scientist&quot;, &quot;La…
+## $ JobSatisfaction          &lt;dbl&gt; 4, 2, 3, 3, 2, 4, 1, 3, 3, 3, 2, 3, 3, 4, 3,…
+## $ MaritalStatus            &lt;chr&gt; &quot;Single&quot;, &quot;Married&quot;, &quot;Single&quot;, &quot;Married&quot;, &quot;M…
+## $ MonthlyIncome            &lt;dbl&gt; 5993, 5130, 2090, 2909, 3468, 3068, 2670, 26…
+## $ MonthlyRate              &lt;dbl&gt; 19479, 24907, 2396, 23159, 16632, 11864, 996…
+## $ NumCompaniesWorked       &lt;dbl&gt; 8, 1, 6, 1, 9, 0, 4, 1, 0, 6, 0, 0, 1, 0, 5,…
+## $ Over18                   &lt;chr&gt; &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;,…
+## $ OverTime                 &lt;chr&gt; &quot;Yes&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;No&quot;, &quot;Yes&quot;…
+## $ PercentSalaryHike        &lt;dbl&gt; 11, 23, 15, 11, 12, 13, 20, 22, 21, 13, 13, …
+## $ PerformanceRating        &lt;dbl&gt; 3, 4, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, 3,…
+## $ RelationshipSatisfaction &lt;dbl&gt; 1, 4, 2, 3, 4, 3, 1, 2, 2, 2, 3, 4, 4, 3, 2,…
+## $ StandardHours            &lt;dbl&gt; 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, …
+## $ StockOptionLevel         &lt;dbl&gt; 0, 1, 0, 0, 1, 0, 3, 1, 0, 2, 1, 0, 1, 1, 0,…
+## $ TotalWorkingYears        &lt;dbl&gt; 8, 10, 7, 8, 6, 8, 12, 1, 10, 17, 6, 10, 5, …
+## $ TrainingTimesLastYear    &lt;dbl&gt; 0, 3, 3, 3, 3, 2, 3, 2, 2, 3, 5, 3, 1, 2, 4,…
+## $ WorkLifeBalance          &lt;dbl&gt; 1, 3, 3, 3, 3, 2, 2, 3, 3, 2, 3, 3, 2, 3, 3,…
+## $ YearsAtCompany           &lt;dbl&gt; 6, 10, 0, 8, 2, 7, 1, 1, 9, 7, 5, 9, 5, 2, 4…
+## $ YearsInCurrentRole       &lt;dbl&gt; 4, 7, 0, 7, 2, 7, 0, 0, 7, 7, 4, 5, 2, 2, 2,…
+## $ YearsSinceLastPromotion  &lt;dbl&gt; 0, 1, 0, 3, 2, 3, 0, 0, 1, 7, 0, 0, 4, 1, 0,…
+## $ YearsWithCurrManager     &lt;dbl&gt; 5, 7, 0, 0, 2, 6, 0, 0, 8, 7, 3, 8, 3, 2, 3,…</code></pre>
+<blockquote>
 <p>Data set reveals that there are 9 qualitative and 26 quantitative parameters about employees working at IBM. However, this is not a true picture as there are many level-based and rating-based variables such as Daily Rate, Environment Satisfaction etc. which have been coded as numerical values. Therefore, a data cleaning is necessary.</p>
 </blockquote>
 <blockquote>
 <p>One important observation is that the data has no missing values.</p>
 </blockquote>
-<h2 id="clean-data">Clean Data</h2>
+</div>
+<div id="clean-data" class="section level2">
+<h2>Clean Data</h2>
 <p>Next, we clean the data set, as variable names are in capital letters, some variables are not really necessary, and some variables, e.g., <code>education</code> are given as a number rather than a more useful description.</p>
-<pre><code class="language-{r}" data-lang="{r}">
-#clean the data
+<pre class="r"><code>#clean the data
 hr_cleaned &lt;- hr_dataset %&gt;% 
   clean_names() %&gt;% 
   mutate(
@@ -169,23 +202,777 @@ hr_cleaned &lt;- hr_dataset %&gt;%
          monthly_income, num_companies_worked, percent_salary_hike,
          performance_rating, total_working_years,
          work_life_balance, years_at_company,
-         years_since_last_promotion)
-
-</code></pre><p>We decided to glimpse the data to gain an overview of the data set and use the skim output.</p>
-<pre><code class="language-{r}" data-lang="{r}">
-#glimpse to get a quick overview of the data after cleaning
-glimpse(hr_cleaned)
-
-#make sure the data is free from missing values
-skim(hr_cleaned)
-
-</code></pre><blockquote>
+         years_since_last_promotion)</code></pre>
+<p>We decided to glimpse the data to gain an overview of the data set and use the skim output.</p>
+<pre class="r"><code>#glimpse to get a quick overview of the data after cleaning
+glimpse(hr_cleaned)</code></pre>
+<pre><code>## Rows: 1,470
+## Columns: 19
+## $ age                        &lt;dbl&gt; 41, 49, 37, 33, 27, 32, 59, 30, 38, 36, 35…
+## $ attrition                  &lt;chr&gt; &quot;Yes&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;…
+## $ daily_rate                 &lt;dbl&gt; 1102, 279, 1373, 1392, 591, 1005, 1324, 13…
+## $ department                 &lt;chr&gt; &quot;Sales&quot;, &quot;Research &amp; Development&quot;, &quot;Resear…
+## $ distance_from_home         &lt;dbl&gt; 1, 8, 2, 3, 2, 2, 3, 24, 23, 27, 16, 15, 2…
+## $ education                  &lt;chr&gt; &quot;College&quot;, &quot;Below College&quot;, &quot;College&quot;, &quot;Ma…
+## $ gender                     &lt;chr&gt; &quot;Female&quot;, &quot;Male&quot;, &quot;Male&quot;, &quot;Female&quot;, &quot;Male&quot;…
+## $ job_role                   &lt;chr&gt; &quot;Sales Executive&quot;, &quot;Research Scientist&quot;, &quot;…
+## $ environment_satisfaction   &lt;chr&gt; &quot;Medium&quot;, &quot;High&quot;, &quot;Very High&quot;, &quot;Very High&quot;…
+## $ job_satisfaction           &lt;chr&gt; &quot;Very High&quot;, &quot;Medium&quot;, &quot;High&quot;, &quot;High&quot;, &quot;Me…
+## $ marital_status             &lt;chr&gt; &quot;Single&quot;, &quot;Married&quot;, &quot;Single&quot;, &quot;Married&quot;, …
+## $ monthly_income             &lt;dbl&gt; 5993, 5130, 2090, 2909, 3468, 3068, 2670, …
+## $ num_companies_worked       &lt;dbl&gt; 8, 1, 6, 1, 9, 0, 4, 1, 0, 6, 0, 0, 1, 0, …
+## $ percent_salary_hike        &lt;dbl&gt; 11, 23, 15, 11, 12, 13, 20, 22, 21, 13, 13…
+## $ performance_rating         &lt;chr&gt; &quot;Excellent&quot;, &quot;Outstanding&quot;, &quot;Excellent&quot;, &quot;…
+## $ total_working_years        &lt;dbl&gt; 8, 10, 7, 8, 6, 8, 12, 1, 10, 17, 6, 10, 5…
+## $ work_life_balance          &lt;chr&gt; &quot;Bad&quot;, &quot;Better&quot;, &quot;Better&quot;, &quot;Better&quot;, &quot;Bett…
+## $ years_at_company           &lt;dbl&gt; 6, 10, 0, 8, 2, 7, 1, 1, 9, 7, 5, 9, 5, 2,…
+## $ years_since_last_promotion &lt;dbl&gt; 0, 1, 0, 3, 2, 3, 0, 0, 1, 7, 0, 0, 4, 1, …</code></pre>
+<pre class="r"><code>#make sure the data is free from missing values
+skim(hr_cleaned)</code></pre>
+<table style='width: auto;'
+        class='table table-condensed'>
+<caption>
+<span id="tab:unnamed-chunk-3">Table 1: </span>Data summary
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Name
+</td>
+<td style="text-align:left;">
+hr_cleaned
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Number of rows
+</td>
+<td style="text-align:left;">
+1470
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Number of columns
+</td>
+<td style="text-align:left;">
+19
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+_______________________
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Column type frequency:
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+character
+</td>
+<td style="text-align:left;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+numeric
+</td>
+<td style="text-align:left;">
+9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+________________________
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Group variables
+</td>
+<td style="text-align:left;">
+None
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+skim_variable
+</th>
+<th style="text-align:right;">
+n_missing
+</th>
+<th style="text-align:right;">
+complete_rate
+</th>
+<th style="text-align:right;">
+min
+</th>
+<th style="text-align:right;">
+max
+</th>
+<th style="text-align:right;">
+empty
+</th>
+<th style="text-align:right;">
+n_unique
+</th>
+<th style="text-align:right;">
+whitespace
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+attrition
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+department
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+education
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+gender
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+job_role
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+environment_satisfaction
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+job_satisfaction
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+marital_status
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+performance_rating
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+work_life_balance
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+skim_variable
+</th>
+<th style="text-align:right;">
+n_missing
+</th>
+<th style="text-align:right;">
+complete_rate
+</th>
+<th style="text-align:right;">
+mean
+</th>
+<th style="text-align:right;">
+sd
+</th>
+<th style="text-align:right;">
+p0
+</th>
+<th style="text-align:right;">
+p25
+</th>
+<th style="text-align:right;">
+p50
+</th>
+<th style="text-align:right;">
+p75
+</th>
+<th style="text-align:right;">
+p100
+</th>
+<th style="text-align:left;">
+hist
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+age
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+36.92
+</td>
+<td style="text-align:right;">
+9.14
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+30
+</td>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:right;">
+43
+</td>
+<td style="text-align:right;">
+60
+</td>
+<td style="text-align:left;">
+▂▇▇▃▂
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+daily_rate
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+802.49
+</td>
+<td style="text-align:right;">
+403.51
+</td>
+<td style="text-align:right;">
+102
+</td>
+<td style="text-align:right;">
+465
+</td>
+<td style="text-align:right;">
+802
+</td>
+<td style="text-align:right;">
+1157
+</td>
+<td style="text-align:right;">
+1499
+</td>
+<td style="text-align:left;">
+▇▇▇▇▇
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+distance_from_home
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+9.19
+</td>
+<td style="text-align:right;">
+8.11
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+29
+</td>
+<td style="text-align:left;">
+▇▅▂▂▂
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+monthly_income
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+6502.93
+</td>
+<td style="text-align:right;">
+4707.96
+</td>
+<td style="text-align:right;">
+1009
+</td>
+<td style="text-align:right;">
+2911
+</td>
+<td style="text-align:right;">
+4919
+</td>
+<td style="text-align:right;">
+8379
+</td>
+<td style="text-align:right;">
+19999
+</td>
+<td style="text-align:left;">
+▇▅▂▁▂
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+num_companies_worked
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2.69
+</td>
+<td style="text-align:right;">
+2.50
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:left;">
+▇▃▂▂▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+percent_salary_hike
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+15.21
+</td>
+<td style="text-align:right;">
+3.66
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:left;">
+▇▅▃▂▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+total_working_years
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+11.28
+</td>
+<td style="text-align:right;">
+7.78
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+40
+</td>
+<td style="text-align:left;">
+▇▇▂▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+years_at_company
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+7.01
+</td>
+<td style="text-align:right;">
+6.13
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+40
+</td>
+<td style="text-align:left;">
+▇▂▁▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+years_since_last_promotion
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2.19
+</td>
+<td style="text-align:right;">
+3.22
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:left;">
+▇▁▁▁▁
+</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
 <p>We can see that we are dealing with a nice data set with no missing values. After data cleaning, we are left with 19 parameters in total, of which - 10 are qualitative and 9 are quantitative.</p>
 </blockquote>
-<h2 id="exploratory-data-analysis">Exploratory Data Analysis</h2>
-<h3 id="attrition-rate-across-departments">Attrition rate across departments</h3>
-<pre><code class="language-{r}" data-lang="{r}">
-# creating variable
+</div>
+<div id="exploratory-data-analysis" class="section level2">
+<h2>Exploratory Data Analysis</h2>
+<div id="attrition-rate-across-departments" class="section level3">
+<h3>Attrition rate across departments</h3>
+<pre class="r"><code># creating variable
 overalll_attrition &lt;- hr_cleaned %&gt;% 
   # grouping by attrition
   group_by(attrition) %&gt;% 
@@ -196,9 +983,9 @@ overalll_attrition &lt;- hr_cleaned %&gt;%
   # filtering
   filter(attrition==&quot;Yes&quot;) %&gt;%  
   # selecting overall attrition
-  select(overall_attrition) 
-
-hr_cleaned %&gt;% 
+  select(overall_attrition) </code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre class="r"><code>hr_cleaned %&gt;% 
   # grouping by variables
   group_by(attrition, department) %&gt;% 
   # counting by grouped variables
@@ -214,17 +1001,23 @@ hr_cleaned %&gt;%
   # ungrouping previously grouped variables
   ungroup() %&gt;% 
   # adding an additional row with a variable
-  add_row(department = 'Overall' , attrition_rate = overalll_attrition[[1]]) 
-
-</code></pre><blockquote>
+  add_row(department = &#39;Overall&#39; , attrition_rate = overalll_attrition[[1]]) </code></pre>
+<pre><code>## `summarise()` regrouping output by &#39;attrition&#39; (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 4 x 2
+##   department             attrition_rate
+##   &lt;chr&gt;                  &lt;chr&gt;         
+## 1 Human Resources        19%           
+## 2 Research &amp; Development 14%           
+## 3 Sales                  21%           
+## 4 Overall                16%</code></pre>
+<blockquote>
 <p>From the chart and table, we can find that the overall attrition is around 16%. This is in line with our previous analysis which indicated that around 20% employees felt dissatisfied with the environmental conditions.</p>
 </blockquote>
 <blockquote>
 <p>Over 20% of Sales employees attrite, and Research &amp; Development has minimum attrition. This data makes sense as Research &amp; Development is a proprietary role and IBM must have put in place non-compete policies for such employees. On the other hand, sales is a highly competitive fast-paced role and thus high attrition is to be expected.</p>
 </blockquote>
 <p>Besides, we think which kind of people leave also matters. If only low performers stay with IBM and all high achievers are leaving, this would be pretty bad. Thus, we have a look at attrition rate in combination with performance_rating.</p>
-<pre><code class="language-{r}" data-lang="{r}">
-ggplot(hr_cleaned, 
+<pre class="r"><code>ggplot(hr_cleaned, 
 aes(x = attrition, 
 fill = performance_rating)) + 
 
@@ -233,25 +1026,25 @@ fill = performance_rating)) +
   labs(fill = &quot;performance rating&quot;,
        y = &quot;proportion&quot;,
        title = &quot;Attrition and performance rating are independent&quot;,
-       subtitle = &quot;Performance rating proportion by attrition&quot;)
-
-</code></pre><blockquote>
+       subtitle = &quot;Performance rating proportion by attrition&quot;)</code></pre>
+<p><img src="/blogs/blog2_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<blockquote>
 <p>From the chart, we can see that the performance of people has no influence on attrition.</p>
 </blockquote>
-<h3 id="distribution-of-age-years_at_company-monthly_income-and-years_since_last_promotion">Distribution of <code>age</code>, <code>years_at_company</code>, <code>monthly_income</code> and <code>years_since_last_promotion</code></h3>
+</div>
+<div id="distribution-of-age-years_at_company-monthly_income-and-years_since_last_promotion" class="section level3">
+<h3>Distribution of <code>age</code>, <code>years_at_company</code>, <code>monthly_income</code> and <code>years_since_last_promotion</code></h3>
 <p>Other important factors for a company are the distributions of <code>age</code>, <code>years_at_company</code>, <code>monthly_income</code> and <code>years_since_last_promotion</code> . Hence, we have a quick look at some summary statistics and the distribution.</p>
-<pre><code class="language-{r}" data-lang="{r}">
-#specifying x axis
+<pre class="r"><code>#specifying x axis
 ggplot(hr_cleaned,aes(x=age))+  
 
   #generating density plot
   geom_density(fill=&quot;#8b9dc3&quot;)+ 
   
   #facet by department
-  facet_wrap(~department) 
-
-</code></pre><pre><code class="language-{r}" data-lang="{r}">
-hr_cleaned %&gt;% 
+  facet_wrap(~department) </code></pre>
+<p><img src="/blogs/blog2_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<pre class="r"><code>hr_cleaned %&gt;% 
 
   #grouped by department
   group_by(department) %&gt;%  
@@ -259,16 +1052,21 @@ hr_cleaned %&gt;%
   #calculating mean_age and rounded it to 0 decimal place
   summarize(mean_age=round(mean(age),0), 
             #calculating median age
-            median_age = round(median(age),0)) 
-
-</code></pre><blockquote>
+            median_age = round(median(age),0)) </code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 3 x 3
+##   department             mean_age median_age
+##   &lt;chr&gt;                     &lt;dbl&gt;      &lt;dbl&gt;
+## 1 Human Resources              38         37
+## 2 Research &amp; Development       37         36
+## 3 Sales                        37         35</code></pre>
+<blockquote>
 <p>The age of employees working in different departments seems to be normally distributed with a mean age of around 37 Yrs and median age of around 36 Yrs.</p>
 </blockquote>
 <blockquote>
 <p>The bump to the right extreme of these curves represent perhaps the senior management age group as they are expected to have more experience.</p>
 </blockquote>
-<pre><code class="language-{r}" data-lang="{r}">
-#specifying x axes
+<pre class="r"><code>#specifying x axes
 ggplot(hr_cleaned,aes(x=years_at_company)) + 
 
   #generating density plot
@@ -278,10 +1076,9 @@ ggplot(hr_cleaned,aes(x=years_at_company)) +
   labs (x=&quot;Years at Company&quot;) + 
   
   #facet by department
-  facet_wrap(~department) 
-
-</code></pre><pre><code class="language-{r}" data-lang="{r}">
-hr_cleaned %&gt;% 
+  facet_wrap(~department) </code></pre>
+<p><img src="/blogs/blog2_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre class="r"><code>hr_cleaned %&gt;% 
 
   #grouped by department
   group_by(department) %&gt;%  
@@ -290,13 +1087,18 @@ hr_cleaned %&gt;%
   summarize(mean_years_at_company=round(mean(years_at_company),0), 
   
             #calculating median years_at_company
-            median_years_at_company = round(median(years_at_company),0)) 
-
-</code></pre><blockquote>
+            median_years_at_company = round(median(years_at_company),0)) </code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 3 x 3
+##   department             mean_years_at_company median_years_at_company
+##   &lt;chr&gt;                                  &lt;dbl&gt;                   &lt;dbl&gt;
+## 1 Human Resources                            7                       5
+## 2 Research &amp; Development                     7                       5
+## 3 Sales                                      7                       6</code></pre>
+<blockquote>
 <p>As for years at company, across departments the distribution seems to be very right skewed, suggesting most employees leave in around 15 years.</p>
 </blockquote>
-<pre><code class="language-{r}" data-lang="{r}">
-#specifying x  axes
+<pre class="r"><code>#specifying x  axes
 ggplot(hr_cleaned,aes(x=monthly_income)) +  
 
   #generating density plot
@@ -306,10 +1108,9 @@ ggplot(hr_cleaned,aes(x=monthly_income)) +
   labs(x=&quot;Monthly Income&quot;)+ 
   
   #facet by department
-  facet_wrap(~department) 
-
-</code></pre><pre><code class="language-{r}" data-lang="{r}">
-hr_cleaned %&gt;% 
+  facet_wrap(~department) </code></pre>
+<p><img src="/blogs/blog2_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<pre class="r"><code>hr_cleaned %&gt;% 
 
   #grouped by department
   group_by(department) %&gt;%  
@@ -318,13 +1119,18 @@ hr_cleaned %&gt;%
   summarize(mean_monthly_income=round(mean(monthly_income),0), 
   
             #calculating median monthly_income
-            median_monthly_income = round(median(monthly_income),0)) 
-
-</code></pre><blockquote>
+            median_monthly_income = round(median(monthly_income),0)) </code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 3 x 3
+##   department             mean_monthly_income median_monthly_income
+##   &lt;chr&gt;                                &lt;dbl&gt;                 &lt;dbl&gt;
+## 1 Human Resources                       6655                  3886
+## 2 Research &amp; Development                6281                  4374
+## 3 Sales                                 6959                  5754</code></pre>
+<blockquote>
 <p>For each department, monthly income is right skewed with average monthly income of Research &amp; Development being on higher side - given the nature of their job role and the experience required. Most of the Sales people draw around USD 5,500 - 6,000 monthly. Human Resources seems to be earning the least on a relative scale.</p>
 </blockquote>
-<pre><code class="language-{r}" data-lang="{r}">
-#specifying x axes
+<pre class="r"><code>#specifying x axes
 ggplot(hr_cleaned,aes(x=years_since_last_promotion)) + 
 
   #generating density plot
@@ -334,10 +1140,9 @@ ggplot(hr_cleaned,aes(x=years_since_last_promotion)) +
   labs(x=&quot;Years Since Last Promotion&quot;) +  
   
   #facet by department
-  facet_wrap(~department) 
-
-</code></pre><pre><code class="language-{r}" data-lang="{r}">
-hr_cleaned %&gt;% 
+  facet_wrap(~department) </code></pre>
+<p><img src="/blogs/blog2_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<pre class="r"><code>hr_cleaned %&gt;% 
   #grouped by department
   group_by(department) %&gt;%  
   
@@ -345,24 +1150,30 @@ hr_cleaned %&gt;%
   summarize(mean_years_since_last_promotion=round(mean(years_since_last_promotion),0), 
   
   #calculating median years_since_last_promotion
-  median_years_since_last_promotion = round(median(years_since_last_promotion),0)) 
-
-</code></pre><blockquote>
+  median_years_since_last_promotion = round(median(years_since_last_promotion),0)) </code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 3 x 3
+##   department           mean_years_since_last_prom… median_years_since_last_prom…
+##   &lt;chr&gt;                                      &lt;dbl&gt;                         &lt;dbl&gt;
+## 1 Human Resources                                2                             1
+## 2 Research &amp; Developm…                           2                             1
+## 3 Sales                                          2                             1</code></pre>
+<blockquote>
 <p>Distribution of years since last promoted indicates that Human Resources and Sales employees spend more time between promotions than those in Research &amp; Development.</p>
 </blockquote>
-<h3 id="distribution-of-job_satisfaction-and-work_life_balance">Distribution of <code>job_satisfaction</code> and <code>work_life_balance</code></h3>
+</div>
+<div id="distribution-of-job_satisfaction-and-work_life_balance" class="section level3">
+<h3>Distribution of <code>job_satisfaction</code> and <code>work_life_balance</code></h3>
 <p>We now want to analyse job_satisfaction and work_life_balance. First, we have a look at the mere numbers.</p>
-<pre><code class="language-{r}" data-lang="{r}">
-ggplot(hr_cleaned, 
+<pre class="r"><code>ggplot(hr_cleaned, 
 aes(x = factor(job_satisfaction, 
 levels = c(&quot;Low&quot;, &quot;Medium&quot;, &quot;High&quot;, &quot;Very High&quot;)))) +
   geom_bar(aes(y = stat(prop), group = 1)) + 
   scale_y_continuous(labels = scales::percent) + 
   labs(x = &quot;Job Satisfaction&quot;,
-       title = &quot;Proportion of People by Job Satisfaction&quot;)
-
-</code></pre><pre><code class="language-{r}" data-lang="{r}">
-hr_cleaned %&gt;%
+       title = &quot;Proportion of People by Job Satisfaction&quot;)</code></pre>
+<p><img src="/blogs/blog2_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<pre class="r"><code>hr_cleaned %&gt;%
   group_by(job_satisfaction) %&gt;%
   summarise(n = n()) %&gt;%
   
@@ -370,10 +1181,16 @@ hr_cleaned %&gt;%
   mutate(proportion = n / sum(n)) %&gt;% 
   
   # reorder job satisfaction levels properly
-  arrange(desc(factor(job_satisfaction, levels = c(&quot;Low&quot;, &quot;Medium&quot;, &quot;High&quot;, &quot;Very High&quot;)))) 
-
-</code></pre><pre><code class="language-{r}" data-lang="{r}">
-ggplot(hr_cleaned, aes(x = factor(work_life_balance, levels = c(&quot;Bad&quot;, &quot;Good&quot;, &quot;Better&quot;, &quot;Best&quot;)))) +
+  arrange(desc(factor(job_satisfaction, levels = c(&quot;Low&quot;, &quot;Medium&quot;, &quot;High&quot;, &quot;Very High&quot;)))) </code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 4 x 3
+##   job_satisfaction     n proportion
+##   &lt;chr&gt;            &lt;int&gt;      &lt;dbl&gt;
+## 1 Very High          459      0.312
+## 2 High               442      0.301
+## 3 Medium             280      0.190
+## 4 Low                289      0.197</code></pre>
+<pre class="r"><code>ggplot(hr_cleaned, aes(x = factor(work_life_balance, levels = c(&quot;Bad&quot;, &quot;Good&quot;, &quot;Better&quot;, &quot;Best&quot;)))) +
 
   # do not show absolute counts but the proportion in percent (stat(prop))
   geom_bar(aes(y = stat(prop), group = 1)) + 
@@ -381,10 +1198,9 @@ ggplot(hr_cleaned, aes(x = factor(work_life_balance, levels = c(&quot;Bad&quot;,
   # show y values as percentages
   scale_y_continuous(labels = scales::percent) + 
   labs(x = &quot;Work-life-balance&quot;,
-       title = &quot;Proportion of People by Work-life-balance&quot;)
-
-</code></pre><pre><code class="language-{r}" data-lang="{r}">
-hr_cleaned %&gt;%
+       title = &quot;Proportion of People by Work-life-balance&quot;)</code></pre>
+<p><img src="/blogs/blog2_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<pre class="r"><code>hr_cleaned %&gt;%
   group_by(work_life_balance) %&gt;%
   summarise(n = n()) %&gt;%
   
@@ -392,14 +1208,20 @@ hr_cleaned %&gt;%
   mutate(proportion = n / sum(n)) %&gt;% 
   
   # reorder work life balance levels properly
-  arrange(desc(factor(work_life_balance, levels = c(&quot;Bad&quot;, &quot;Good&quot;, &quot;Better&quot;, &quot;Best&quot;)))) 
-
-</code></pre><blockquote>
+  arrange(desc(factor(work_life_balance, levels = c(&quot;Bad&quot;, &quot;Good&quot;, &quot;Better&quot;, &quot;Best&quot;)))) </code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 4 x 3
+##   work_life_balance     n proportion
+##   &lt;chr&gt;             &lt;int&gt;      &lt;dbl&gt;
+## 1 Best                153     0.104 
+## 2 Better              893     0.607 
+## 3 Good                344     0.234 
+## 4 Bad                  80     0.0544</code></pre>
+<blockquote>
 <p>We can see that over 60% people are highly satisfied with their job. Furthermore, only around 5% of people have a bad work-life-balance.</p>
 </blockquote>
 <p>Then, we investigate the relationship between those two variables.</p>
-<pre><code class="language-{r}" data-lang="{r}">
-# order job satisfactioon properly
+<pre class="r"><code># order job satisfactioon properly
 ggplot(hr_cleaned, 
 aes(x = factor(job_satisfaction, levels = c(&quot;Low&quot;, &quot;Medium&quot;, &quot;High&quot;, &quot;Very High&quot;)), 
 
@@ -411,14 +1233,15 @@ levels = c(&quot;Best&quot;, &quot;Better&quot;, &quot;Good&quot;, &quot;Bad&quo
        y = &quot;proportion&quot;,
        title = &quot;Relationship between Job Satisfaction and Work Life Balance&quot;,
        subtitle = &quot;Work life balance proportion by job satisfaction&quot;,
-       x = &quot;Job Satisfaction&quot;)
-
-</code></pre><blockquote>
+       x = &quot;Job Satisfaction&quot;)</code></pre>
+<p><img src="/blogs/blog2_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<blockquote>
 <p>Tt seems like there is no apparent relationship between work-life-balance and job satisfaction!</p>
 </blockquote>
-<h3 id="relationship-between-monthly-income-and-education">Relationship between monthly income and education</h3>
-<pre><code class="language-{r}" data-lang="{r}">
-# show density, not counts (stat(density))
+</div>
+<div id="relationship-between-monthly-income-and-education" class="section level3">
+<h3>Relationship between monthly income and education</h3>
+<pre class="r"><code># show density, not counts (stat(density))
 ggplot(hr_cleaned, 
 mapping = aes(x = monthly_income, y = stat(density))) + 
   geom_freqpoly(mapping = aes(colour = education)) +
@@ -429,96 +1252,102 @@ mapping = aes(x = monthly_income, y = stat(density))) +
   facet_wrap(~factor(education, levels = c(&quot;Below College&quot;, &quot;College&quot;, &quot;Bachelor&quot;, &quot;Master&quot;, &quot;Doctor&quot;))) + 
   
   # use a nice theme
-  theme_gdocs() 
-
-</code></pre><pre><code class="language-{r}" data-lang="{r}">
-ggplot(hr_cleaned, 
+  theme_gdocs() </code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="/blogs/blog2_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(hr_cleaned, 
 aes(y = factor(education, 
 levels = c(&quot;Below College&quot;, &quot;College&quot;, &quot;Bachelor&quot;, &quot;Master&quot;, &quot;Doctor&quot;)), 
                        x = monthly_income)) +
   geom_boxplot() +
   labs(x = &quot;Monthly Income&quot;,
        y = &quot;Education&quot;,
-       title = &quot;Monthly Income Boxplots by Education&quot;)
-
-</code></pre><blockquote>
+       title = &quot;Monthly Income Boxplots by Education&quot;)</code></pre>
+<p><img src="/blogs/blog2_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<blockquote>
 <p>In the boxplot above, we can see that the median monthly income is higher with higher education, with the exemption of a lower median monthly income for a Bachelor education as opposed to College education.</p>
 </blockquote>
 <p>Then we look at average monthly income by education level.</p>
-<pre><code class="language-{r}" data-lang="{r}">
-avg_income_by_edu &lt;- hr_cleaned %&gt;% 
+<pre class="r"><code>avg_income_by_edu &lt;- hr_cleaned %&gt;% 
   group_by(education) %&gt;% 
   
   # compute average monthly income by education level
-  summarise(mean = mean(monthly_income)) 
-
-# order education levels properly
+  summarise(mean = mean(monthly_income)) </code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre class="r"><code># order education levels properly
 ggplot(avg_income_by_edu, 
 aes(x = factor(education, levels = c(&quot;Below College&quot;, &quot;College&quot;, &quot;Bachelor&quot;, &quot;Master&quot;, &quot;Doctor&quot;)), y = mean)) +
   geom_col() +
   labs(x = &quot;Education Level&quot;,
        y = &quot;Average Monthly Income&quot;,
-       title = &quot;Higher Education Means Higher Average Income!&quot;)
-</code></pre><blockquote>
+       title = &quot;Higher Education Means Higher Average Income!&quot;)</code></pre>
+<p><img src="/blogs/blog2_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<blockquote>
 <p>It also shows a tendency for higher education yielding higher average monthly incomes.</p>
 </blockquote>
-<h3 id="relationship-between-monthly-income-and-gender">Relationship between monthly income and gender</h3>
-<pre><code class="language-{r}" data-lang="{r}">
-# show density, not counts (stat(density))
+</div>
+<div id="relationship-between-monthly-income-and-gender" class="section level3">
+<h3>Relationship between monthly income and gender</h3>
+<pre class="r"><code># show density, not counts (stat(density))
 ggplot(hr_cleaned, mapping = aes(x = monthly_income, y = stat(density))) + 
   geom_freqpoly(mapping = aes(colour = gender)) +
   labs(x = &quot;Monthly Income&quot;,
        title = &quot;Monthly Income Distribution by Gender&quot;) +
-  facet_wrap(~gender)
-
-</code></pre><pre><code class="language-{r}" data-lang="{r}">
-ggplot(hr_cleaned, 
+  facet_wrap(~gender)</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="/blogs/blog2_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(hr_cleaned, 
 aes(y = gender, x = monthly_income)) +
   geom_boxplot() +
   labs(x = &quot;Monthly Income&quot;,
        y = &quot;Gender&quot;,
-       title = &quot;Monthly Income Boxplots by Gender&quot;)
-
-</code></pre><blockquote>
+       title = &quot;Monthly Income Boxplots by Gender&quot;)</code></pre>
+<p><img src="/blogs/blog2_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<blockquote>
 <p>Although it is expected to have a gender pay gap, it seems like women are better off than men at IBM.</p>
 </blockquote>
-<h3 id="relationship-between-income-and-job-role">Relationship between income and job role.</h3>
-<pre><code class="language-{r}" data-lang="{r}">
-ggplot(hr_cleaned, aes(y = reorder(job_role, monthly_income), x = monthly_income)) + # order by monthly income
+</div>
+<div id="relationship-between-income-and-job-role." class="section level3">
+<h3>Relationship between income and job role.</h3>
+<pre class="r"><code>ggplot(hr_cleaned, aes(y = reorder(job_role, monthly_income), x = monthly_income)) + # order by monthly income
   geom_boxplot() +
   labs(x = &quot;Monthly Income&quot;,
        y = &quot;Job Role&quot;,
-       title = &quot;Monthly Income Boxplots by Job Role&quot;)
-
-</code></pre><blockquote>
+       title = &quot;Monthly Income Boxplots by Job Role&quot;)</code></pre>
+<p><img src="/blogs/blog2_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<blockquote>
 <p>As it seems, managers and research directors are the highest paid at IBM. And Sales representatives are least well paid.</p>
 </blockquote>
 <p>Then we brings the effect of age given the job role.</p>
-<pre><code class="language-{r}" data-lang="{r}">
-ggplot(hr_cleaned, aes(x = age, y = monthly_income)) +
+<pre class="r"><code>ggplot(hr_cleaned, aes(x = age, y = monthly_income)) +
   # set opacity of points
   geom_point(alpha = 0.4) + 
   # one scatterplot for each job role
   facet_wrap(~job_role) + 
   labs(y = &quot;Monthly Income&quot;,
-       title = &quot;Effect of Age on Monthly Income Given the Job Role&quot;)
-
-</code></pre><blockquote>
+       title = &quot;Effect of Age on Monthly Income Given the Job Role&quot;)</code></pre>
+<p><img src="/blogs/blog2_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<blockquote>
 <p>Even though the effect of age on monthly income is not too apparent when faceting on job role, we also have to consider that one usually takes on other roles throughout a career.</p>
 </blockquote>
-<h3 id="relationship-betwwen-income-and-age">Relationship betwwen income and age</h3>
-<pre><code class="language-{r}" data-lang="{r}">
-ggplot(hr_cleaned, aes(x = age, y = monthly_income)) + 
+</div>
+<div id="relationship-betwwen-income-and-age" class="section level3">
+<h3>Relationship betwwen income and age</h3>
+<pre class="r"><code>ggplot(hr_cleaned, aes(x = age, y = monthly_income)) + 
 
   # set opacity of points
   geom_point(alpha = 0.4) + 
   geom_smooth() +
   labs(y = &quot;Monthly Income&quot;,
-       title = &quot;Relationship between Income and Age&quot;)
-
-</code></pre><blockquote>
+       title = &quot;Relationship between Income and Age&quot;)</code></pre>
+<pre><code>## `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
+<p><img src="/blogs/blog2_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<blockquote>
 <p>This is actually something that seems to be intuitive for most people: higher income with higher age, as staying with the same company for a long time means, you have gone through some tough times together, and therefore had some paycheck increases over the years.</p>
 </blockquote>
+</div>
+</div>
+</div>
 
                         </div>
                     </section>
