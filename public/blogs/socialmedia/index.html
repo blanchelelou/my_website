@@ -91,7 +91,11 @@
 <h1>General Social Survey (GSS)</h1>
 <p>The <a href="http://www.gss.norc.org/">General Social Survey (GSS)</a> gathers data on American society in order to monitor and explain trends in attitudes, behaviours, and attributes. Many trends have been tracked for decades, so one can see the evolution of attitudes, etc in American Society.</p>
 <p>In this section, we analyze data from the <strong>2016 GSS sample data</strong>, using it to estimate values of <em>population parameters</em> of interest about US adults. The GSS sample data file has 2867 observations of 935 variables, but we are only interested in very few of these variables and you are using a smaller file.</p>
-<p>Load Libraries</p>
+<div id="load-libraries" class="section level2">
+<h2>Load Libraries</h2>
+</div>
+<div id="load-data" class="section level2">
+<h2>Load Data</h2>
 <pre class="r"><code>gss &lt;- read_csv(here::here(&quot;data&quot;, &quot;smallgss2016.csv&quot;), 
                 na = c(&quot;&quot;, &quot;Don&#39;t know&quot;,
                        &quot;No answer&quot;, &quot;Not applicable&quot;))</code></pre>
@@ -112,6 +116,7 @@
 <li><code>sex</code>: Female - Male</li>
 <li><code>degree</code>: highest education level attained</li>
 </ul>
+</div>
 <div id="instagram-and-snapchat-by-sex" class="section level2">
 <h2>Instagram and Snapchat, by sex</h2>
 <p>Can we estimate the <em>population</em> proportion of Snapchat or Instagram users in 2016?</p>

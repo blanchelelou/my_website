@@ -13,8 +13,8 @@
       <pubDate>Tue, 31 Oct 2017 22:42:51 -0500</pubDate>
       
       <guid>/blogs/movies/</guid>
-      <description>Load Libraries
-## ── Attaching packages ───────────────────────────────────────────── tidyverse 1.3.0 ── ## ✓ ggplot2 3.3.2 ✓ purrr 0.3.4 ## ✓ tibble 3.0.3 ✓ dplyr 1.0.2 ## ✓ tidyr 1.1.2 ✓ stringr 1.4.0 ## ✓ readr 1.3.1 ✓ forcats 0.5.0 ## ── Conflicts ──────────────────────────────────────────────── tidyverse_conflicts() ── ## x dplyr::filter() masks stats::filter() ## x dplyr::lag() masks stats::lag() ## Registered S3 method overwritten by &amp;#39;mosaic&amp;#39;: ## method from ## fortify.SpatialPolygonsDataFrame ggplot2 ## ## The &amp;#39;mosaic&amp;#39; package masks several functions from core packages in order to add ## additional features.</description>
+      <description>In the following I will explore whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not.
+Load Libraries ## ── Attaching packages ───────────────────────────────────────────── tidyverse 1.3.0 ── ## ✓ ggplot2 3.3.2 ✓ purrr 0.3.4 ## ✓ tibble 3.0.3 ✓ dplyr 1.0.2 ## ✓ tidyr 1.1.2 ✓ stringr 1.4.0 ## ✓ readr 1.3.1 ✓ forcats 0.5.0 ## ── Conflicts ──────────────────────────────────────────────── tidyverse_conflicts() ── ## x dplyr::filter() masks stats::filter() ## x dplyr::lag() masks stats::lag() ## Registered S3 method overwritten by &amp;#39;mosaic&amp;#39;: ## method from ## fortify.</description>
     </item>
     
     <item>
@@ -36,7 +36,7 @@ In this section, we analyze data from the 2016 GSS sample data, using it to esti
       <description>IBM HR Analytics We will analyze a data set on Human Resource Analytics.
 The IBM HR Analytics Employee Attrition &amp;amp; Performance data set is a fictional data set created by IBM data scientists.
 Among other things, the data set includes employees’ income, their distance from work, their position in the company, their level of education, etc. A full description can be found on the website.
-Load Data First, we load the data.</description>
+Load Libraries  Load Data First, we load the data.</description>
     </item>
     
     <item>

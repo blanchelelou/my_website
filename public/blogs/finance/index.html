@@ -91,8 +91,16 @@
 <h1>Returns of financial stocks</h1>
 <p>I will use the <code>tidyquant</code> package to download historical data of stock prices, calculate returns, and examine the distribution of returns.</p>
 <p>I will first identify which stocks we want to download data for, and for this we must know their ticker symbol; Apple is known as AAPL, Microsoft as MSFT, McDonald’s as MCD, etc. The file <code>nyse.csv</code> contains 508 stocks listed on the NYSE, their ticker <code>symbol</code>, <code>name</code>, the IPO (Initial Public Offering) year, and the sector and industry the company is in.</p>
+<div id="load-libraries" class="section level2">
+<h2>Load libraries</h2>
+</div>
+<div id="load-data" class="section level2">
+<h2>Load Data</h2>
 <pre class="r"><code>nyse &lt;- read.csv(here::here(&quot;data&quot;,&quot;nyse.csv&quot;))</code></pre>
-<p>Based on this dataset, I will create a table and a bar plot that shows the number of companies per sector, in descending order</p>
+</div>
+<div id="number-of-companies-per-sector" class="section level2">
+<h2>Number of companies per sector</h2>
+<p>Based on this dataset, I will create a table and a bar plot that shows the number of companies per sector, in descending order :</p>
 <pre class="r"><code># count the number of companies by sector
 companies_by_sector &lt;- nyse %&gt;%
   group_by(sector) %&gt;%
@@ -245,7 +253,10 @@ ggplot(companies_by_sector, aes(x = reorder(sector, count), y = count)) +
   
   coord_flip()</code></pre>
 <p><img src="/blogs/blog1_files/figure-html/companies_per_sector2-1.png" width="672" /></p>
-<p>Next, I have chosen a few stocks to analyse.</p>
+</div>
+<div id="deep-dive-on-a-few-stocks" class="section level2">
+<h2>Deep dive on a few stocks</h2>
+<p>Next, I have chosen a few stocks to analyze.</p>
 <pre class="r"><code># Notice the cache=TRUE argument in the chunk options. Because getting data is time consuming, 
 # cache=TRUE means that once it downloads data, the chunk will not run again next time you knit your Rmd
 
@@ -286,7 +297,7 @@ myStocks_returns_monthly &lt;- myStocks %&gt;%
                type       = &quot;arithmetic&quot;,
                col_rename = &quot;monthly_returns&quot;,
                cols = c(nested.col)) </code></pre>
-<p>Below is q table with the monthly returns, min, max, median, and SD for each of the stocks.</p>
+<p>Below is a table with the monthly returns, min, max, median, and SD for each of the stocks.</p>
 <pre class="r"><code>myStocks_returns_monthly_summary &lt;- myStocks_returns_monthly %&gt;% 
   group_by(symbol) %&gt;% 
   summarise(min = min(monthly_returns), 
@@ -464,6 +475,9 @@ SPY
 </tr>
 </tbody>
 </table>
+</div>
+<div id="visualizations" class="section level2">
+<h2>Visualizations</h2>
 <p>Below is a density plot, using <code>geom_density()</code>, for each of the stocks.</p>
 <pre class="r"><code>myStocks_returns_monthly %&gt;% 
   filter(symbol != &quot;SPY&quot;) %&gt;% # only display density of the stocks (not the ETF)
@@ -506,6 +520,7 @@ SPY
   theme(legend.position = &quot;none&quot;) </code></pre>
 <p><img src="/blogs/blog1_files/figure-html/risk_return_plot-1.png" width="672" /></p>
 <p>The plot shows Amazon (AMZN) is the stock with the strongest risk-reward profile : it has the highest average monthly return and has the highest risk as indicated by its position on the top right corner of the graph. Indeed, in general, higher risks lead to a higher mean monthly return. However, what is interesting to note is BP’s position that proves a high risk does not necessarily imply a high return - BP has the lowest monthly returns.</p>
+</div>
 </div>
 
                         </div>

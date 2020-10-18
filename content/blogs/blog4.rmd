@@ -10,8 +10,9 @@ keywords: ""
 slug: movies
 title: Does Steven Spielberg really beat Tim Burton in IMDB ratings?
 ---
+In the following I will explore whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not.
 
-Load Libraries
+## Load Libraries
 
 ```{r load-libraries, echo=FALSE}
 
@@ -32,7 +33,7 @@ library(scales)
 library(lubridate)
 library(kableExtra)
 ```
-In the following I will explore whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not.
+
 
 ```{r directors, echo=FALSE, out.width="100%"}
 knitr::include_graphics(here::here("images", "directors.png"), error = FALSE)
@@ -40,10 +41,14 @@ knitr::include_graphics(here::here("images", "directors.png"), error = FALSE)
 
 >First, I reproduce the above graph.
 
+## Load Data
+
 ```{r load-movies-data}
 movies <- read_csv(here::here("data", "movies.csv"))
 glimpse(movies)
 ```
+
+## Selecting Directors 
 
 ```{r}
 
@@ -70,6 +75,9 @@ selected_directors %>%
   kable_classic()
 
 ```
+
+
+## Comparing Spielberg and Burton 
 
 ```{r}
 
@@ -168,6 +176,8 @@ ggplot(selected_directors, aes(
   theme(aspect.ratio=3.5/5) 
 
 ```
+
+## Hypothesis Testing
 
 >Now I will perform a hypothesis test with the hypotheses being:
 

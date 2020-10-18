@@ -87,7 +87,9 @@
 <link href="/rmarkdown-libs/lightable/lightable.css" rel="stylesheet" />
 
 
-<p>Load Libraries</p>
+<p>In the following I will explore whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not.</p>
+<div id="load-libraries" class="section level2">
+<h2>Load Libraries</h2>
 <pre><code>## ── Attaching packages ───────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>## ✓ ggplot2 3.3.2     ✓ purrr   0.3.4
 ## ✓ tibble  3.0.3     ✓ dplyr   1.0.2
@@ -207,11 +209,13 @@
 <pre><code>## The following object is masked from &#39;package:dplyr&#39;:
 ## 
 ##     group_rows</code></pre>
-<p>In the following I will explore whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not.</p>
 <p><img src="/Users/blanchelelouvier/Documents/LBS/CA09 Data Analytics/my_website/images/directors.png" width="100%" /></p>
 <blockquote>
 <p>First, I reproduce the above graph.</p>
 </blockquote>
+</div>
+<div id="load-data" class="section level2">
+<h2>Load Data</h2>
 <pre class="r"><code>movies &lt;- read_csv(here::here(&quot;data&quot;, &quot;movies.csv&quot;))</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -241,6 +245,9 @@
 ## $ votes               &lt;dbl&gt; 886204, 793059, 418214, 995415, 1676169, 534658, …
 ## $ reviews             &lt;dbl&gt; 3777, 2843, 1934, 2425, 5312, 3917, 1752, 1752, 3…
 ## $ rating              &lt;dbl&gt; 7.9, 7.7, 7.0, 8.1, 9.0, 6.5, 8.7, 7.5, 8.5, 7.2,…</code></pre>
+</div>
+<div id="selecting-directors" class="section level2">
+<h2>Selecting Directors</h2>
 <pre class="r"><code>selected_directors &lt;- movies %&gt;%
   
   select(director, rating) %&gt;%
@@ -346,6 +353,9 @@ Tim Burton
 </tr>
 </tbody>
 </table>
+</div>
+<div id="comparing-spielberg-and-burton" class="section level2">
+<h2>Comparing Spielberg and Burton</h2>
 <pre class="r"><code># Selecting Spielberg and Burton
 
 selected_directors &lt;- movies %&gt;% 
@@ -441,6 +451,9 @@ ggplot(selected_directors, aes(
   theme(aspect.ratio=3.5/5) </code></pre>
 <pre><code>## Warning: Ignoring unknown aesthetics: fill</code></pre>
 <p><img src="/blogs/blog4_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>
+<div id="hypothesis-testing" class="section level2">
+<h2>Hypothesis Testing</h2>
 <blockquote>
 <p>Now I will perform a hypothesis test with the hypotheses being:</p>
 </blockquote>
@@ -528,6 +541,7 @@ p-value
 <blockquote>
 <p>The simulation-based test shows again that the p-value is &lt; the alpha value. Hence, we reject the null-hypothesis.</p>
 </blockquote>
+</div>
 
                         </div>
                     </section>

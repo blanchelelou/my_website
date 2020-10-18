@@ -11,6 +11,15 @@ slug: finance
 title: Financial Stocks
 ---
 
+# Returns of financial stocks
+
+I will use the `tidyquant` package to download historical data of stock prices, calculate returns, and examine the distribution of returns. 
+
+I will first identify which stocks we want to download data for, and for this we must know their ticker symbol; Apple is known as AAPL, Microsoft as MSFT, McDonald's as MCD, etc. The file `nyse.csv` contains 508 stocks listed on the NYSE, their ticker `symbol`, `name`, the IPO  (Initial Public Offering) year, and the sector and industry the company is in.
+
+
+## Load libraries
+
 ```{r load-libraries, warning=FALSE, message=FALSE, echo=FALSE}
 library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
 library(mosaic)
@@ -34,18 +43,15 @@ library(patchwork)
 library(scales)
 ```
 
-# Returns of financial stocks
-
-I will use the `tidyquant` package to download historical data of stock prices, calculate returns, and examine the distribution of returns. 
-
-I will first identify which stocks we want to download data for, and for this we must know their ticker symbol; Apple is known as AAPL, Microsoft as MSFT, McDonald's as MCD, etc. The file `nyse.csv` contains 508 stocks listed on the NYSE, their ticker `symbol`, `name`, the IPO  (Initial Public Offering) year, and the sector and industry the company is in.
-
+## Load Data 
 
 ```{r load_nyse_data, message=FALSE, warning=FALSE}
 nyse <- read.csv(here::here("data","nyse.csv"))
 ```
 
-Based on this dataset, I will create a table and a bar plot that shows the number of companies per sector, in descending order
+## Number of companies per sector 
+
+Based on this dataset, I will create a table and a bar plot that shows the number of companies per sector, in descending order :
 
 ```{r companies_per_sector}
 # count the number of companies by sector
@@ -95,7 +101,10 @@ ggplot(companies_by_sector, aes(x = reorder(sector, count), y = count)) +
 
 ```
 
-Next, I have chosen a few stocks to analyse.
+
+## Deep dive on a few stocks 
+
+Next, I have chosen a few stocks to analyze.
 
 ```{r get_price_data, message=FALSE, warning=FALSE, cache=TRUE}
 # Notice the cache=TRUE argument in the chunk options. Because getting data is time consuming, 
@@ -136,7 +145,7 @@ myStocks_returns_monthly <- myStocks %>%
                cols = c(nested.col)) 
 ```
 
-Below is q table with the monthly returns, min, max, median, and SD for each of the stocks.
+Below is a table with the monthly returns, min, max, median, and SD for each of the stocks.
 
 ```{r summarise_monthly_returns}
 
@@ -153,6 +162,8 @@ myStocks_returns_monthly_summary %>%
   kable_material_dark(bootstrap_options = c("striped", "hover", "condensed", "responsive")) # have a nice HTML table
 
 ```
+
+## Visualizations 
 
 Below is a density plot, using `geom_density()`, for each of the stocks.
 

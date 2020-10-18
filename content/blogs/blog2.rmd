@@ -21,6 +21,8 @@ The [IBM HR Analytics Employee Attrition & Performance data set](https://www.kag
 
 Among other things, the data set includes employees' income, their distance from work, their position in the company, their level of education, etc. A full description can be found on the website.
 
+## Load Libraries
+
 ```{r load-libraries, warning=FALSE, message=FALSE, echo=FALSE}
 library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
 library(mosaic)
