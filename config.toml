@@ -122,7 +122,7 @@ disqusShortname = ""
       url = "blogs/finance"
 
     [[params.tiles.showcase]]
-      title = "Omega Group Pay Discrimination""
+      title = "Omega Group Pay Discrimination"
       subtitle = "Are women paid more than men?"
       image = "women.jpg"
       url = "blogs/omega"

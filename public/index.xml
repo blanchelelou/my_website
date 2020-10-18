@@ -40,15 +40,6 @@ Load Libraries  Load Data First, we load the data.</description>
     </item>
     
     <item>
-      <title>Are women paid a higher salary than men?</title>
-      <link>/blogs/omega/</link>
-      <pubDate>Tue, 31 Oct 2017 21:28:43 -0500</pubDate>
-      
-      <guid>/blogs/omega/</guid>
-      <description>Omega Group plc- Pay Discrimination At the last board meeting of Omega Group Plc., the headquarters of a large multinational company, the issue was raised that women were being discriminated in the company, in the sense that the salaries were not the same for male and female executives. A quick analysis of a sample of 50 employees (of which 24 men and 26 women) revealed that the average salary for men was about 8,700 higher than for women.</description>
-    </item>
-    
-    <item>
       <title>Financial Stocks</title>
       <link>/blogs/finance/</link>
       <pubDate>Tue, 31 Oct 2017 21:28:43 -0500</pubDate>
@@ -56,6 +47,15 @@ Load Libraries  Load Data First, we load the data.</description>
       <guid>/blogs/finance/</guid>
       <description>Returns of financial stocks I will use the tidyquant package to download historical data of stock prices, calculate returns, and examine the distribution of returns.
 I will first identify which stocks we want to download data for, and for this we must know their ticker symbol; Apple is known as AAPL, Microsoft as MSFT, McDonald’s as MCD, etc. The file nyse.csv contains 508 stocks listed on the NYSE, their ticker symbol, name, the IPO (Initial Public Offering) year, and the sector and industry the company is in.</description>
+    </item>
+    
+    <item>
+      <title>Omega Group Pay Discrimination</title>
+      <link>/blogs/omega/</link>
+      <pubDate>Tue, 31 Oct 2017 21:28:43 -0500</pubDate>
+      
+      <guid>/blogs/omega/</guid>
+      <description>Omega Group plc- Pay Discrimination At the last board meeting of Omega Group Plc., the headquarters of a large multinational company, the issue was raised that women were being discriminated in the company, in the sense that the salaries were not the same for male and female executives. A quick analysis of a sample of 50 employees (of which 24 men and 26 women) revealed that the average salary for men was about 8,700 higher than for women.</description>
     </item>
     
     <item>

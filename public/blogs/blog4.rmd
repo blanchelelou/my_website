@@ -77,7 +77,7 @@ selected_directors %>%
 ```
 
 
-## Comparing Spielberg and Burton with Confidence Intervals
+## Comparing Spielberg and Burton through Confidence Intervals
 
 ```{r}
 
