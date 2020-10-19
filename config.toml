@@ -139,10 +139,7 @@ disqusShortname = ""
   [params.two]
     enable = true
     title = "About my world"
-    subtitle = """
-    Hello all! 
-    My name is Blanche and I am currently pursuing a Master's in Financial Analysis at the London Business School. This website is dedicated to share some of my work in data analytics.
-    Besides R, I am very passionate about finance, innovation and revolutionary technologies."""
+    subtitle = "Hello all! My name is Blanche and I am currently pursuing a Master's in Financial Analysis at the London Business School. This website is dedicated to share some of my work in data analytics. Besides R, I am very passionate about finance, innovation and revolutionary technologies."
     buttonText = "My projects"
     url = "blogs"
 
@@ -213,7 +210,7 @@ disqusShortname = ""
       url= "https://www.linkedin.com/in/blanche-lelouvier-13b27115a/de?originalSubdomain=uk&challengeId=AQFHtMFYu8r3HQAAAXT5X754tEUTBJdMeGMnZkHEluXf0ZzdtwZdv0jeecMu625ZxKhP4F61s3JzIxOB1t0AuqR3nXoPUVgAGQ&submissionId=c220d11d-2522-3b16-5f6a-640da6de2573"
       label = "LinkedIn"
 
-    [[params.footer.quicklinks]]
-      text = "Design: "
-      url= "https://www.html5up.net"
-      alt = "HTML5 UP"
+    ##[[params.footer.quicklinks]]
+     ##text = "Design: "
+     ##url= "https://www.html5up.net"
+      ##alt = "HTML5 UP"
