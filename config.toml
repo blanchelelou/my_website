@@ -28,7 +28,7 @@ disqusShortname = ""
   favicon    = "favicon.ico"
 
   # Just a custom image variable, please define it in .md files for content.
-  image = ""
+  image = "intro.jpg"
 
   # 404 error customization
   [params.error404]
